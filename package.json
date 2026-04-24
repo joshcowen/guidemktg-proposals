@@ -1,0 +1,8 @@
+{
+  "name": "guidemktg-proposals",
+  "version": "1.0.0",
+  "description": "Guide MKTG client proposal pages",
+  "dependencies": {
+    "resend": "^3.0.0"
+  }
+}

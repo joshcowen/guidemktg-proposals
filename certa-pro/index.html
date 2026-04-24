@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Messaging Engagement Proposal — Certa Pro Painters of Grand Haven</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      line-height: 1.6;
+    }
+
+    /* Shared inner wrapper */
+    .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* Header */
+    .site-header {
+      background: #111;
+      padding: 24px 0;
+    }
+
+    /* Hero */
+    .hero {
+      background: #111;
+      padding: 52px 0 60px;
+      border-bottom: 4px solid #e87c26;
+    }
+    .hero .label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 38px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      max-width: 720px;
+      margin-bottom: 18px;
+    }
+    .hero h1 span { color: #e87c26; }
+    .hero p {
+      font-size: 17px;
+      color: #aaa;
+      max-width: 620px;
+      line-height: 1.75;
+    }
+
+    /* Main */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 52px 40px 80px;
+    }
+
+    /* Section label */
+    .section-label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+    }
+
+    /* White card */
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      border-left: 5px solid #e87c26;
+    }
+    .card.dark-border { border-left-color: #111; }
+    .card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #111;
+    }
+    .card p {
+      font-size: 16px;
+      color: #444;
+      max-width: 800px;
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+    .card p:last-child { margin-bottom: 0; }
+
+    /* Problem list */
+    .problem-list {
+      list-style: none;
+      margin-top: 16px;
+    }
+    .problem-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-top: 1px solid #f0f0f0;
+      font-size: 15px;
+      color: #333;
+      line-height: 1.6;
+    }
+    .problem-list li:first-child { border-top: none; padding-top: 0; }
+    .problem-list .dot {
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      background: #e87c26;
+      border-radius: 50%;
+      margin-top: 8px;
+    }
+
+    /* Deliverables grid */
+    .deliverables-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 8px;
+    }
+    .deliverable-item {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 22px 24px;
+      border-top: 3px solid #e87c26;
+    }
+    .deliverable-item h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .deliverable-item p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Process steps */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 8px;
+    }
+    .step {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 22px 24px;
+      position: relative;
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #111;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
+    .step h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .step p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Use case pills */
+    .use-cases {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .use-case {
+      background: #f0f0f0;
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+    }
+    .use-case span { color: #e87c26; margin-right: 4px; }
+
+    /* What's in the guide */
+    .guide-sections {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .guide-section-item {
+      background: #fff3eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .guide-section-item .tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #e87c26;
+      margin-bottom: 5px;
+    }
+    .guide-section-item p {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Proof block */
+    .proof-block {
+      background: #fff;
+      border-radius: 10px;
+      padding: 32px 40px;
+      margin-bottom: 28px;
+      border: 2px dashed #e87c26;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .proof-block .proof-text { flex: 1; }
+    .proof-block .proof-text h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #111;
+    }
+    .proof-block .proof-text p {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .proof-block .proof-link {
+      flex-shrink: 0;
+    }
+    .proof-block .proof-link a {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 22px;
+      border-radius: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .proof-block .proof-link a:hover { background: #cf6d1e; }
+
+    /* Investment block */
+    .investment-block {
+      background: #fff;
+      border-radius: 10px;
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      border-left: 5px solid #111;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 40px;
+      align-items: center;
+    }
+    .investment-block h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .investment-block p {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    .investment-block p:last-child { margin-bottom: 0; }
+    .investment-number {
+      text-align: center;
+      background: #f8f8f8;
+      border-radius: 10px;
+      padding: 28px 24px;
+    }
+    .investment-number .amount {
+      font-size: 48px;
+      font-weight: 900;
+      color: #111;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .investment-number .amount span { color: #e87c26; }
+    .investment-number .label {
+      font-size: 13px;
+      color: #888;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .investment-number .sublabel {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 8px;
+    }
+
+    /* Includes list */
+    .includes-list {
+      list-style: none;
+      margin-top: 14px;
+    }
+    .includes-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: #444;
+      padding: 7px 0;
+      border-top: 1px solid #f0f0f0;
+      line-height: 1.5;
+    }
+    .includes-list li:first-child { border-top: none; padding-top: 0; }
+    .includes-list .check {
+      flex-shrink: 0;
+      color: #e87c26;
+      font-weight: 800;
+      font-size: 14px;
+      margin-top: 1px;
+    }
+
+    /* Bottom note */
+    .bottom-note {
+      background: #111;
+      color: #fff;
+      border-radius: 10px;
+      padding: 40px 40px;
+      margin-top: 8px;
+    }
+    .bottom-note h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+    .bottom-note p {
+      font-size: 15px;
+      color: #aaa;
+      max-width: 700px;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .bottom-note p:last-child { margin-bottom: 0; }
+    .bottom-note strong { color: #e87c26; }
+    .bottom-note a:not(.cta-button) { color: #e87c26; }
+
+    /* Next step CTA */
+    .next-step {
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid #333;
+    }
+    .next-step p {
+      font-size: 16px;
+      color: #ccc;
+      margin-bottom: 16px;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .cta-button:hover { background: #cf6d1e; color: #fff; }
+
+    /* Signature section */
+    .signature-section {
+      margin-top: 28px;
+    }
+    .signature-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 40px 40px;
+      border: 2px solid #111;
+    }
+    .signature-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .signature-card > p {
+      font-size: 15px;
+      color: #555;
+      max-width: 720px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .agreement-summary {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.8;
+      border-left: 4px solid #e87c26;
+    }
+    .agreement-summary strong { color: #111; }
+    .sig-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr 200px;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .sig-field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 6px;
+    }
+    .sig-field input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid #ddd;
+      padding: 8px 0;
+      font-size: 16px;
+      color: #111;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .sig-field input:focus { border-bottom-color: #e87c26; }
+    .sig-field input[readonly] { color: #888; cursor: default; }
+    .sig-field input#sig-name {
+      font-style: italic;
+      font-size: 18px;
+    }
+    .agree-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 28px;
+      margin-top: 8px;
+    }
+    .agree-row input[type="checkbox"] {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: #e87c26;
+      cursor: pointer;
+    }
+    .agree-row label {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+    .sig-submit {
+      display: inline-block;
+      background: #111;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .sig-submit:hover { background: #333; }
+    .sig-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .sig-questions {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+    .sig-questions a { color: #e87c26; }
+    .sig-success {
+      display: none;
+      background: #f0faf0;
+      border: 2px solid #4caf50;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 20px;
+      font-size: 15px;
+      color: #2e7d32;
+      font-weight: 600;
+    }
+    .sig-error {
+      display: none;
+      color: #c62828;
+      font-size: 13px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .inner { padding-left: 20px; padding-right: 20px; }
+      .main { padding-left: 20px; padding-right: 20px; }
+      .deliverables-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .guide-sections { grid-template-columns: 1fr 1fr; }
+      .investment-block { grid-template-columns: 1fr; }
+      .proof-block { flex-direction: column; gap: 20px; }
+      .card { padding: 24px 20px; }
+      .bottom-note { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="inner">
+      <img src="guide-mktg-logo-white.png" alt="Guide MKTG" style="height:68px; display:block;">
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="inner">
+      <div class="label">Proposal</div>
+      <h1>Certa Pro Painters of Grand Haven<br><span>Messaging Engagement</span></h1>
+      <p>Here's what the engagement looks like, what you'd walk away with, and why it matters for everything you're already running — ads, direct mail, email, and beyond.</p>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- What we heard -->
+    <div class="section-label">What We Heard</div>
+    <div class="card">
+      <h2>You've got the tactics. The foundation is what's missing.</h2>
+      <p>In our conversation, a few things stood out. You're running Meta ads, direct mail, radio, and email — real spend, real effort. And you're not seeing the return you should be getting out of it. The radio's been a brand play that works for the franchise, not for you specifically. The direct mail conversion is lower than it should be. The meta ads have room.</p>
+      <p>That's not a tactics problem. Each one of those channels lands on a message. And right now, each piece is being built from scratch by different vendors, without a shared foundation underneath. When the message is off — or inconsistent — the tactics leak. People see it and move on, or they call and don't convert.</p>
+      <p>Here's what we identified from your situation specifically:</p>
+      <ul class="problem-list">
+        <li><div class="dot"></div><span>Your current ads lead with Certa Pro — credentials, ratings, services. Your customer is looking for someone who gets their frustration first.</span></li>
+        <li><div class="dot"></div><span>You're spending on multiple channels with multiple vendors, but no single document exists that tells every one of them exactly how to talk about what you do.</span></li>
+        <li><div class="dot"></div><span>The franchise gives you a template, and you've already recognized that working outside it is where the growth is for your specific market.</span></li>
+        <li><div class="dot"></div><span>You've got 30,000 past customers and a growing email list that could be doing more work — but only if the message is right.</span></li>
+        <li><div class="dot"></div><span>Freedom Flooring is a newer company with more flexibility, and the same messaging work would apply there as you grow it.</span></li>
+      </ul>
+    </div>
+
+    <!-- What we'd do -->
+    <div class="section-label">How It Works</div>
+    <div class="card dark-border">
+      <h2>Two calls. One document that runs everything.</h2>
+      <p>The engagement is straightforward. We do the work between two focused conversations with you — one to go deep on your business, customers, and competitors, and one to walk through what we built and refine it together.</p>
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Intake Call — 1 Hour</h3>
+          <p>We dig into your customers, your competitors, the problems you solve, and what makes Certa Pro of Grand Haven different from anyone else a homeowner could call. This is the raw material everything else is built from.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>We Build the Messaging Guide</h3>
+          <p>Guide MKTG takes everything from the intake and builds a 5–7 page brand script document using the StoryBrand framework. You don't have to do anything in this phase — just wait for the draft.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Delivery Call — 1 Hour</h3>
+          <p>We walk through the completed guide together, explain the reasoning behind each section, and take your feedback. One round of revisions is included — and you have up to a year to use it.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- What you get -->
+    <div class="section-label">What You Walk Away With</div>
+    <div class="card">
+      <h2>A 5–7 page messaging guide, delivered in Google Docs.</h2>
+      <p>This is the document that goes to your Meta vendor, your direct mail company, your email writer, and anyone else who touches your marketing. Instead of every channel being built from scratch, they're all working from the same script.</p>
+
+      <div class="guide-sections">
+        <div class="guide-section-item">
+          <div class="tag">Brand Story</div>
+          <p>The full narrative of who your customer is, what problem they're dealing with, and how Certa Pro helps them win.</p>
+        </div>
+        <div class="guide-section-item">
+          <div class="tag">One-Liner</div>
+          <p>One clear sentence that answers "what do you do?" in a way that makes people want to know more. Works in person, in ads, anywhere.</p>
+        </div>
+        <div class="guide-section-item">
+          <div class="tag">7-Part StoryBrand Framework</div>
+          <p>The full framework: character, problem, guide, plan, CTA, success, and failure. The building blocks behind every piece of copy you'll ever run.</p>
+        </div>
+        <div class="guide-section-item">
+          <div class="tag">Empathy + Authority Statements</div>
+          <p>How to show homeowners you understand their frustration — before you pitch anything. This is what makes people stop scrolling.</p>
+        </div>
+        <div class="guide-section-item">
+          <div class="tag">Call-to-Action Language</div>
+          <p>Specific, tested CTA language for both direct asks and lower-commitment entry points — so every ad and email has a clear next step.</p>
+        </div>
+        <div class="guide-section-item">
+          <div class="tag">Phrase Bank</div>
+          <p>The exact words and phrases that fit your brand — and the ones to avoid. Keeps your message consistent whether it's you writing it or a vendor.</p>
+        </div>
+      </div>
+
+      <p style="margin-top: 20px;">Once you have this document, it becomes the answer to: <em>"What do we say in this email?"</em> or <em>"What's the headline for this postcard?"</em> Every channel you're running gets better because they're all pulling from the same place.</p>
+
+      <div class="use-cases">
+        <div class="use-case"><span>→</span> Meta ads</div>
+        <div class="use-case"><span>→</span> Direct mail copy</div>
+        <div class="use-case"><span>→</span> Email campaigns</div>
+        <div class="use-case"><span>→</span> Website headlines</div>
+        <div class="use-case"><span>→</span> Sales conversations</div>
+        <div class="use-case"><span>→</span> Referral program cards</div>
+        <div class="use-case"><span>→</span> Social media</div>
+        <div class="use-case"><span>→</span> Elevator pitch</div>
+      </div>
+    </div>
+
+    <!-- Proof -->
+    <div class="proof-block">
+      <div class="proof-text">
+        <h3>Want to see what this looks like in practice?</h3>
+        <p>The ad rewrites we already sent you are a preview. We took two of your current Meta ads and rewrote them using the StoryBrand framework — with notes explaining exactly what changed and why. That's the kind of shift the full messaging guide makes possible across every channel you run.</p>
+      </div>
+      <div class="proof-link">
+        <a href="ad-rewrites.html">View the Ad Rewrites →</a>
+      </div>
+    </div>
+
+    <!-- Investment -->
+    <div class="section-label">Investment</div>
+    <div class="investment-block">
+      <div>
+        <h2>One company. One engagement. One price.</h2>
+        <p>The messaging engagement is scoped to one company — in this case, Certa Pro Painters of Grand Haven. Everything we've talked about above is included: both calls, the full 5–7 page guide, and one round of revisions within a year of delivery.</p>
+        <p>No ongoing retainer required. No upsell built into the process. You get the document, you own it, and you put it to work across whatever channels make sense for your business right now.</p>
+        <ul class="includes-list">
+          <li><div class="check">✓</div> Intake call (1 hour)</li>
+          <li><div class="check">✓</div> Full 5–7 page messaging guide — brand story, one-liner, 7-part StoryBrand framework</li>
+          <li><div class="check">✓</div> Delivery call (1 hour)</li>
+          <li><div class="check">✓</div> One round of revisions (valid up to 1 year from delivery)</li>
+          <li><div class="check">✓</div> Delivered in Google Docs — easy to share with any vendor</li>
+        </ul>
+      </div>
+      <div class="investment-number">
+        <div class="amount"><span>$</span>5,000</div>
+        <div class="label">Total Investment</div>
+        <div class="sublabel">Certa Pro Painters of Grand Haven<br>Due upon receipt</div>
+      </div>
+    </div>
+
+    <!-- Bottom note -->
+    <div class="bottom-note">
+      <h3>Ready to move forward?</h3>
+      <p>Sign below and your agreement goes straight to us. We'll reach out within one business day to confirm receipt, get the intake call scheduled, and get things moving. Timeline from kickoff to delivery is typically 4–6 weeks.</p>
+      <p>If you've got questions first — about scope, timeline, or how this applies to Freedom Flooring down the road — I'm easy to reach. Just shoot me an email at <a href="mailto:josh@guidemktg.com">josh@guidemktg.com</a> or give me a call.</p>
+    </div>
+
+    <!-- Signature -->
+    <div class="signature-section">
+      <div class="section-label">Sign to Get Started</div>
+      <div class="signature-card">
+        <h3>Agreement &amp; Authorization</h3>
+        <p>By signing below, you authorize Guide MKTG to begin the messaging engagement described in this proposal. An invoice for $5,000 will be issued upon signing and is due upon receipt. Work begins after payment is received.</p>
+
+        <div class="agreement-summary">
+          <strong>Scope:</strong> Messaging Engagement — Certa Pro Painters of Grand Haven<br>
+          <strong>Deliverable:</strong> 5–7 page messaging guide (brand story, one-liner, 7-part StoryBrand framework)<br>
+          <strong>Includes:</strong> Two 1-hour calls + one round of revisions (valid up to 1 year)<br>
+          <strong>Investment:</strong> $5,000 — due upon receipt<br>
+          <strong>Payment:</strong> Check or ACH Transfer to Guide MKTG, 1800 92nd Ave, Zeeland, MI 49464
+        </div>
+
+        <div class="sig-fields">
+          <div class="sig-field">
+            <label>Full Name</label>
+            <input type="text" id="sig-name" placeholder="Sign your name" autocomplete="name">
+          </div>
+          <div class="sig-field">
+            <label>Title / Company</label>
+            <input type="text" id="sig-title" placeholder="e.g. Owner, Certa Pro Painters" autocomplete="organization-title">
+          </div>
+          <div class="sig-field">
+            <label>Date</label>
+            <input type="text" id="sig-date" readonly>
+          </div>
+        </div>
+
+        <div class="agree-row">
+          <input type="checkbox" id="sig-agree">
+          <label for="sig-agree">I have read and agree to the scope, deliverables, and payment terms outlined above. I understand that work begins after payment is received and that this constitutes a binding agreement between myself and Guide MKTG, LLC.</label>
+        </div>
+
+        <button class="sig-submit" id="sig-button" onclick="sendSignature()">Sign &amp; Send Agreement</button>
+        <div class="sig-error" id="sig-error"></div>
+        <div class="sig-success" id="sig-success">Your agreement has been sent to Guide MKTG. We'll be in touch within one business day to confirm and get the intake call on the calendar. Thank you!</div>
+
+        <p class="sig-questions">Questions before signing? Email <a href="mailto:josh@guidemktg.com">josh@guidemktg.com</a></p>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+
+  <script>
+    document.getElementById('sig-date').value = new Date().toLocaleDateString('en-US', {
+      month: 'long', day: 'numeric', year: 'numeric'
+    });
+
+    async function sendSignature() {
+      const name   = document.getElementById('sig-name').value.trim();
+      const title  = document.getElementById('sig-title').value.trim();
+      const date   = document.getElementById('sig-date').value;
+      const agreed = document.getElementById('sig-agree').checked;
+      const errEl  = document.getElementById('sig-error');
+      const sucEl  = document.getElementById('sig-success');
+      const btn    = document.getElementById('sig-button');
+
+      errEl.style.display = 'none';
+      errEl.textContent = '';
+
+      if (!name)   { errEl.textContent = 'Please enter your full name.'; errEl.style.display = 'block'; return; }
+      if (!agreed) { errEl.textContent = 'Please check the agreement box to proceed.'; errEl.style.display = 'block'; return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const res = await fetch('/api/sign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            title: title || 'Certa Pro Painters of Grand Haven',
+            date,
+            proposalTitle: 'Certa Pro Painters of Grand Haven \u2014 Messaging Engagement',
+            clientCompany: 'Certa Pro Painters of Grand Haven',
+            investment: '$5,000'
+          })
+        });
+
+        if (!res.ok) throw new Error('Server error');
+
+        sucEl.style.display = 'block';
+        sucEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (e) {
+        btn.disabled = false;
+        btn.textContent = 'Sign \u0026 Send Agreement';
+        errEl.textContent = 'Something went wrong. Please email josh@guidemktg.com directly.';
+        errEl.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>
