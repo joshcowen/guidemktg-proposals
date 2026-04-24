@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/certa-pro", "destination": "/certa-pro/index.html" }
+  "redirects": [
+    { "source": "/certa-pro", "destination": "/certa-pro/", "permanent": false }
   ]
 }
