@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foreign Accents — Dashboard Data Flow</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      line-height: 1.6;
+    }
+
+    .site-header {
+      background: #111;
+      padding: 24px 0;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      font-size: 20px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .brand span { color: #e87c26; }
+
+    .hero {
+      background: #111;
+      padding: 48px 0 56px;
+      border-bottom: 4px solid #e87c26;
+    }
+    .hero .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    .hero .label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .hero h1 span { color: #e87c26; }
+    .hero p {
+      font-size: 16px;
+      color: #aaa;
+      max-width: 600px;
+    }
+
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 52px 40px 80px;
+    }
+
+    .section-label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+
+    /* ── SYSTEM OVERVIEW ── */
+    .systems {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 52px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px 36px;
+      border-left: 5px solid #e87c26;
+    }
+    .system-box {
+      text-align: center;
+      padding: 22px 16px;
+      border-radius: 10px;
+    }
+    .system-box.callrail   { background: #eff6ff; border-top: 3px solid #2563eb; }
+    .system-box.make       { background: #fff8f0; border-top: 3px solid #e87c26; }
+    .system-box.sheets     { background: #f0fdf4; border-top: 3px solid #16a34a; }
+    .system-box.looker     { background: #f5f5f5; border-top: 3px solid #111; }
+    .system-box .sys-name {
+      font-size: 17px;
+      font-weight: 900;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .system-box .sys-role {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .system-box .sys-desc {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.6;
+    }
+    .sys-arrow {
+      font-size: 28px;
+      color: #e87c26;
+      font-weight: 900;
+      padding: 0 12px;
+      text-align: center;
+    }
+
+    /* ── FLOW SPINE ── */
+    .flow { position: relative; }
+    .flow-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 24px;
+      margin-bottom: 0;
+      position: relative;
+    }
+    .flow-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .step-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .step-circle.callrail-color { background: #2563eb; }
+    .step-circle.make-color     { background: #e87c26; }
+    .step-circle.claude-color   { background: #7c3aed; }
+    .step-circle.sheets-color   { background: #16a34a; }
+    .step-circle.looker-color   { background: #111; }
+
+    .connector-line {
+      width: 3px;
+      flex: 1;
+      min-height: 32px;
+      background: #ddd;
+      margin: 0 auto;
+    }
+    .connector-line.orange { background: #e87c26; }
+
+    .step-body { padding-bottom: 36px; }
+
+    .step-system-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+    }
+    .tag-callrail { background: #dbeafe; color: #1d4ed8; }
+    .tag-make     { background: #fff0e0; color: #c0600a; }
+    .tag-claude   { background: #ede9fe; color: #6d28d9; }
+    .tag-sheets   { background: #dcfce7; color: #15803d; }
+    .tag-looker   { background: #f0f0f0; color: #444; }
+    .tag-manual   { background: #fef9c3; color: #854d0e; }
+
+    .step-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 24px 28px;
+    }
+    .step-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .step-card p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    .step-card p + p { margin-top: 8px; }
+
+    /* ── TRACKING NUMBERS GRID ── */
+    .tracking-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .tracking-item {
+      background: #eff6ff;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+      border-top: 3px solid #2563eb;
+    }
+    .tracking-item .t-channel {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #1d4ed8;
+      margin-bottom: 6px;
+    }
+    .tracking-item .t-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: #111;
+    }
+
+    /* ── CALLRAIL CAPTURE GRID ── */
+    .capture-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .capture-item {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .capture-item h4 {
+      font-size: 13px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .capture-item p {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ── GOOGLE ADS SIDE NOTE ── */
+    .ads-note {
+      background: #fafff5;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      color: #166534;
+      line-height: 1.6;
+    }
+    .ads-note .ads-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── SHEETS SCHEMA ── */
+    .schema-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 13px;
+    }
+    .schema-table th {
+      text-align: left;
+      padding: 8px 12px;
+      background: #f0fdf4;
+      color: #15803d;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 2px solid #bbf7d0;
+    }
+    .schema-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #333;
+      vertical-align: top;
+    }
+    .schema-table tr:last-child td { border-bottom: none; }
+    .schema-table .col-name { font-weight: 700; color: #111; font-family: monospace; font-size: 12px; }
+    .schema-table .source-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+
+    /* ── CLAUDE JSON BLOCK ── */
+    .json-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .json-field {
+      background: #faf5ff;
+      border-radius: 8px;
+      padding: 14px 16px;
+      border-left: 3px solid #7c3aed;
+    }
+    .json-field .field-name {
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #6d28d9;
+      margin-bottom: 4px;
+    }
+    .json-field .field-values {
+      font-size: 11px;
+      color: #888;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .json-field p {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ── DASHBOARD MODULES ── */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .module-item {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 18px 20px;
+      border-top: 3px solid #111;
+    }
+    .module-item.orange-top { border-top-color: #e87c26; }
+    .module-item .mod-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 6px;
+    }
+    .module-item h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 6px;
+    }
+    .module-item p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ── MANUAL ENTRY BLOCK ── */
+    .manual-block {
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-top: 16px;
+      font-size: 14px;
+      color: #713f12;
+      line-height: 1.7;
+    }
+    .manual-block strong { color: #111; }
+
+    @media (max-width: 800px) {
+      .main { padding: 32px 20px 60px; }
+      .header-inner { padding: 0 20px; }
+      .hero .inner { padding: 0 20px; }
+      .systems { grid-template-columns: 1fr; padding: 24px 20px; }
+      .sys-arrow { transform: rotate(90deg); padding: 12px 0; }
+      .tracking-grid { grid-template-columns: 1fr 1fr; }
+      .capture-grid { grid-template-columns: 1fr 1fr; }
+      .json-grid { grid-template-columns: 1fr; }
+      .modules-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">Applied AI <span>Works</span></div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div style="font-size:12px; color:#555; font-weight:500; letter-spacing:1px; text-transform:uppercase;">In partnership with</div>
+        <img src="../service-1st/guide-mktg-logo-white.png" alt="Guide MKTG" style="height:60px; display:block;">
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="inner">
+      <div class="label">System Documentation</div>
+      <h1>Foreign Accents at College Hill<br><span>Dashboard Data Flow</span></h1>
+      <p>How a phone call becomes a row in the dashboard — from the moment it rings to the moment it shows up in Looker Studio.</p>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- SYSTEM OVERVIEW -->
+    <div class="section-label">The Four Systems</div>
+    <div class="systems">
+      <div class="system-box callrail">
+        <div class="sys-name">CallRail</div>
+        <div class="sys-role">Call Attribution</div>
+        <div class="sys-desc">Tracks which marketing channel drove each call. Records it. Transcribes it. Forwards it to the shop. Staff picks up the same way they always have.</div>
+      </div>
+      <div class="sys-arrow">&#8594;</div>
+      <div class="system-box make">
+        <div class="sys-name">Make.com</div>
+        <div class="sys-role">Automation + AI Layer</div>
+        <div class="sys-desc">Picks up every completed call from CallRail, writes it to Sheets, sends the transcript to Claude, and writes the AI output back. Runs automatically, 24/7.</div>
+      </div>
+      <div class="sys-arrow">&#8594;</div>
+      <div class="system-box sheets">
+        <div class="sys-name">Google Sheets</div>
+        <div class="sys-role">Data Warehouse</div>
+        <div class="sys-desc">Every call lands here as a structured row — source channel, transcript, Claude analysis, and daily repair order entries. The single source of truth for the dashboard.</div>
+      </div>
+      <div class="sys-arrow">&#8594;</div>
+      <div class="system-box looker">
+        <div class="sys-name">Looker Studio</div>
+        <div class="sys-role">Live Dashboard</div>
+        <div class="sys-desc">Reads from Google Sheets and Google Ads. Refreshes every four hours. Five modules. Shareable via link — no login required for stakeholders.</div>
+      </div>
+    </div>
+
+    <!-- FLOW -->
+    <div class="section-label">Step-by-Step Flow</div>
+    <div class="flow">
+
+      <!-- STEP 1: CUSTOMER CALLS -->
+      <div class="flow-step">
+        <div class="flow-connector">
+          <div class="step-circle callrail-color">1</div>
+          <div class="connector-line orange"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-system-tag tag-callrail">CallRail</div>
+          <div class="step-card">
+            <h3>Customer Dials a Tracking Number</h3>
+            <p>Every marketing channel has its own unique CallRail tracking number. When a customer calls any of them, CallRail knows instantly which channel drove that call before the phone even rings at the shop.</p>
+            <div class="tracking-grid">
+              <div class="tracking-item">
+                <div class="t-channel">Channel 1</div>
+                <div class="t-name">Google Ads</div>
+              </div>
+              <div class="tracking-item">
+                <div class="t-channel">Channel 2</div>
+                <div class="t-name">Google Business Profile</div>
+              </div>
+              <div class="tracking-item">
+                <div class="t-channel">Channel 3</div>
+                <div class="t-name">Website Organic</div>
+              </div>
+              <div class="tracking-item">
+                <div class="t-channel">Channel 4</div>
+                <div class="t-name">Email Campaigns</div>
+              </div>
+              <div class="tracking-item">
+                <div class="t-channel">Channel 5</div>
+                <div class="t-name">Direct / Unknown</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: CALLRAIL CAPTURES -->
+      <div class="flow-step">
+        <div class="flow-connector">
+          <div class="step-circle callrail-color">2</div>
+          <div class="connector-line orange"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-system-tag tag-callrail">CallRail</div>
+          <div class="step-card">
+            <h3>CallRail Captures Everything, Then Forwards the Call</h3>
+            <p>Before the call reaches the shop, CallRail captures four things in under a second. Then it forwards the call to the shop's real phone number. The staff picks up exactly as they always have. Nothing changes on their end.</p>
+            <div class="capture-grid">
+              <div class="capture-item">
+                <h4>Source Channel</h4>
+                <p>Which tracking number was dialed — maps directly to the marketing channel.</p>
+              </div>
+              <div class="capture-item">
+                <h4>Call Recording</h4>
+                <p>Full audio of the call, stored in CallRail and available for review.</p>
+              </div>
+              <div class="capture-item">
+                <h4>Transcript</h4>
+                <p>Automatic text transcription of the full conversation, ready for AI analysis.</p>
+              </div>
+              <div class="capture-item">
+                <h4>New vs. Returning</h4>
+                <p>CallRail checks the caller's phone number against its history to flag first-time vs. repeat callers.</p>
+              </div>
+            </div>
+            <div class="ads-note">
+              <div class="ads-icon">&#8618;</div>
+              <div><strong>Google Ads side connection:</strong> CallRail also imports call conversion events back into Google Ads. This means the Ads account can now see which campaigns are driving actual phone calls, not just clicks. Cost per call by campaign becomes visible for the first time.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: MAKE PICKS UP -->
+      <div class="flow-step">
+        <div class="flow-connector">
+          <div class="step-circle make-color">3</div>
+          <div class="connector-line orange"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-system-tag tag-make">Make.com</div>
+          <div class="step-card">
+            <h3>Make.com Picks Up the Completed Call</h3>
+            <p>When the call ends, CallRail pushes a webhook to Make.com with the full call record: timestamp, source channel, duration, caller phone number, and raw transcript. Make is listening 24/7 and picks it up within seconds of the call ending.</p>
+            <p>If the webhook fails or CallRail is temporarily unreachable, Make retries automatically and logs the failure so nothing falls through without being noticed.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: WRITE TO SHEETS -->
+      <div class="flow-step">
+        <div class="flow-connector">
+          <div class="step-circle sheets-color">4</div>
+          <div class="connector-line orange"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-system-tag tag-sheets">Google Sheets</div>
+          <div class="step-card">
+            <h3>Call Record Written to the Data Warehouse</h3>
+            <p>Make.com writes a new row to the <strong>calls_log</strong> sheet with all the CallRail data. This row is the foundation. The Claude AI fields will be added to this same row in the next step.</p>
+            <table class="schema-table">
+              <thead>
+                <tr>
+                  <th>Column</th>
+                  <th>Data</th>
+                  <th>Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-name">timestamp</td>
+                  <td>Date and time of the call</td>
+                  <td><span class="source-tag tag-callrail">CallRail</span></td>
+                </tr>
+                <tr>
+                  <td class="col-name">source_channel</td>
+                  <td>google_ads / gbp / web_organic / email / direct</td>
+                  <td><span class="source-tag tag-callrail">CallRail</span></td>
+                </tr>
+                <tr>
+                  <td class="col-name">call_duration_seconds</td>
+                  <td>Length of call in seconds</td>
+                  <td><span class="source-tag tag-callrail">CallRail</span></td>
+                </tr>
+                <tr>
+                  <td class="col-name">caller_phone</td>
+                  <td>Caller's phone number (hashed for privacy)</td>
+                  <td><span class="source-tag tag-callrail">CallRail</span></td>
+                </tr>
+                <tr>
+                  <td class="col-name">transcript_raw</td>
+                  <td>Full text of the call transcript</td>
+                  <td><span class="source-tag tag-callrail">CallRail</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5: CLAUDE API -->
+      <div class="flow-step">
+        <div class="flow-connector">
+          <div class="step-circle claude-color">5</div>
+          <div class="connector-line orange"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-system-tag tag-claude">Claude API</div>
+          <div class="step-card">
+            <h3>Transcript Sent to Claude for Analysis</h3>
+            <p>Make.com sends the transcript text to the Claude API with a structured prompt. Claude reads the conversation and returns a single JSON object — no summaries, no paragraphs. Just clean structured data that Make can parse and write directly to the spreadsheet.</p>
+            <p>Claude is instructed to return only valid JSON, so Make never has to guess the format. If a transcript is too short or empty to analyze (a missed call, a hangup), Make logs the error and moves on without breaking the workflow.</p>
+            <div class="json-grid">
+              <div class="json-field">
+                <div class="field-name">caller_type</div>
+                <div class="field-values">"new" | "returning" | "unknown"</div>
+                <p>Whether this appears to be a first-time or repeat customer based on how they speak about the shop.</p>
+              </div>
+              <div class="json-field">
+                <div class="field-name">service_requested</div>
+                <div class="field-values">plain text</div>
+                <p>What the caller asked about: oil change, brake job, diagnostic, AC repair, etc.</p>
+              </div>
+              <div class="json-field">
+                <div class="field-name">appointment_outcome</div>
+                <div class="field-values">"booked" | "not_booked" | "transferred" | "voicemail" | "unclear"</div>
+                <p>Whether the call ended with a scheduled appointment or not.</p>
+              </div>
+              <div class="json-field">
+                <div class="field-name">reason_not_booked</div>
+                <div class="field-values">plain text or null</div>
+                <p>If not booked: price concern, already booked elsewhere, just inquiring, no answer, etc.</p>
+              </div>
+              <div class="json-field">
+                <div class="field-name">special_mentioned</div>
+                <div class="field-values">boolean</div>
+                <p>True if the caller referenced a weekly special by name or description.</p>
+              </div>
+              <div class="json-field">
+                <div class="field-name">special_name</div>
+                <div class="field-values">plain text or null</div>
+                <p>Which special was mentioned, if any. Used to populate the Weekly Specials dashboard module.</p>
+              </div>
+              <div class="json-field">
+                <div class="field-name">sentiment</div>
+                <div class="field-values">"positive" | "neutral" | "negative"</div>
+                <p>Overall tone of the caller based on word choice and context.</p>
+              </div>
+              <div class="json-field">
+                <div class="field-name">follow_up_needed</div>
+                <div class="field-values">boolean</div>
+                <p>True if the call ended without resolution and the caller implied they'd call back or expected follow-up.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6: WRITE CLAUDE OUTPUT BACK -->
+      <div class="flow-step">
+        <div class="flow-connector">
+          <div class="step-circle sheets-color">6</div>
+          <div class="connector-line orange"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-system-tag tag-sheets">Google Sheets</div>
+          <div class="step-card">
+            <h3>Claude Output Written Back to the Same Row</h3>
+            <p>Make.com parses the JSON response from Claude and writes each field as a separate column in the same calls_log row created in Step 4. The row now contains the full picture: where the call came from (CallRail) and what happened on it (Claude). No manual entry, no staff logging, no post-call forms.</p>
+            <p>An <strong>ai_processing_status</strong> column is also written: "success," "error," or "pending." This lets the error logging workflow catch any rows where Claude didn't return a valid response and retry them automatically.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 7: MANUAL RO ENTRY -->
+      <div class="flow-step">
+        <div class="flow-connector">
+          <div class="step-circle sheets-color">7</div>
+          <div class="connector-line orange"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-system-tag tag-manual">Manual Entry</div>
+          <div class="step-card">
+            <h3>Daily Repair Order Entry (Revenue Layer)</h3>
+            <p>Once a day, a staff member at the shop enters that day's repair orders into the <strong>ro_log</strong> sheet. Takes about two minutes.</p>
+            <div class="manual-block">
+              <strong>Why manual and not automatic?</strong> The shop's management system (Steer) doesn't offer a public API, and the phone system (Yealink) isn't compatible with Steer's call intelligence features. A direct data connection isn't possible right now. The manual sheet is the practical workaround: it keeps revenue data in the dashboard without requiring the shop to change any systems. If Steer opens up API access in the future, connecting it directly is a straightforward upgrade.
+            </div>
+            <table class="schema-table" style="margin-top:16px;">
+              <thead>
+                <tr>
+                  <th>Column</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-name">ro_date</td>
+                  <td>Date the repair order was created</td>
+                </tr>
+                <tr>
+                  <td class="col-name">customer_type</td>
+                  <td>New or returning</td>
+                </tr>
+                <tr>
+                  <td class="col-name">ticket_amount</td>
+                  <td>Total invoice value in dollars</td>
+                </tr>
+                <tr>
+                  <td class="col-name">service_category</td>
+                  <td>Primary service type (oil change, brakes, diagnostic, etc.)</td>
+                </tr>
+                <tr>
+                  <td class="col-name">special_referenced</td>
+                  <td>Weekly special tied to the RO, if applicable</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 8: LOOKER STUDIO -->
+      <div class="flow-step">
+        <div class="flow-connector">
+          <div class="step-circle looker-color">8</div>
+          <div style="flex:1;"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-system-tag tag-looker">Looker Studio</div>
+          <div class="step-card">
+            <h3>Looker Studio Builds the Live Dashboard</h3>
+            <p>Looker Studio connects directly to Google Sheets (calls_log + ro_log) and to Google Ads via native connector. It refreshes every four hours automatically. The dashboard is shareable via link — Shane Beal, David Lasher, and the Spartan team can all access it without logging in anywhere.</p>
+            <div class="modules-grid">
+              <div class="module-item orange-top">
+                <div class="mod-num">Module 1</div>
+                <h4>Volume &amp; Revenue Overview</h4>
+                <p>Total ROs vs. goal. Revenue vs. $125k target. Average ticket size trend. New vs. returning split.</p>
+              </div>
+              <div class="module-item orange-top">
+                <div class="mod-num">Module 2</div>
+                <h4>Lead Source Attribution</h4>
+                <p>Calls by channel. Booked appointments by channel. Conversion rate by channel. Cost per call from Google Ads spend.</p>
+              </div>
+              <div class="module-item orange-top">
+                <div class="mod-num">Module 3</div>
+                <h4>New vs. Returning</h4>
+                <p>New caller count, conversion rate, booked ROs, average ticket. Same breakdown for returning callers.</p>
+              </div>
+              <div class="module-item">
+                <div class="mod-num">Module 4</div>
+                <h4>Call Performance</h4>
+                <p>Answered vs. missed. Conversion rate. Top reasons calls didn't book. Volume by day of week and time of day.</p>
+              </div>
+              <div class="module-item">
+                <div class="mod-num">Module 5</div>
+                <h4>Weekly Specials</h4>
+                <p>Calls referencing each special. Booked ROs per special. Week-over-week comparison. Which specials are actually driving calls.</p>
+              </div>
+              <div class="module-item" style="background:#fff; border-top:3px solid #ddd; display:flex; align-items:center; justify-content:center; text-align:center; padding:18px;">
+                <div>
+                  <div style="font-size:24px; margin-bottom:8px;">&#8635;</div>
+                  <div style="font-size:12px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:1px;">Auto-refresh every 4 hours</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end .flow -->
+
+    <!-- FOOTER NOTE -->
+    <div style="background:#111; border-radius:10px; padding:36px 40px; margin-top:12px;">
+      <h3 style="font-size:20px; font-weight:800; color:#fff; margin-bottom:12px;">Questions about how any of this works?</h3>
+      <p style="font-size:15px; color:#aaa; max-width:640px; line-height:1.75; margin-bottom:8px;">Reach Josh at <a href="mailto:josh@guidemktg.com" style="color:#e87c26;">josh@guidemktg.com</a> or reply in the existing email thread.</p>
+      <p style="font-size:15px; color:#aaa; max-width:640px; line-height:1.75;">The full proposal with pricing and sign-off is at <a href="/spartan-foreign-accents/" style="color:#e87c26;">proposal.guidemktg.com/spartan-foreign-accents</a>.</p>
+    </div>
+
+  </div>
+
+</body>
+</html>
