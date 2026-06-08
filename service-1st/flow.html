@@ -433,6 +433,79 @@
       margin: 0;
     }
 
+    /* ── FEATURE CALLOUTS ── */
+    .features-block {
+      background: #111;
+      border-radius: 12px;
+      padding: 36px 40px;
+      margin-bottom: 52px;
+    }
+    .features-block .features-heading {
+      font-size: 22px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .features-block .features-sub {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 28px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .feature-card {
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 22px 24px;
+      border-left: 4px solid #e87c26;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .feature-check {
+      width: 28px;
+      height: 28px;
+      background: #e87c26;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .feature-text h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .feature-text p {
+      font-size: 13px;
+      color: #999;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .feature-text .feature-where {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #e87c26;
+    }
+
+    @media (max-width: 800px) {
+      .features-block { padding: 28px 20px; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 800px) {
       .main { padding: 32px 20px 60px; }
       .header-inner { padding: 0 20px; }
@@ -444,6 +517,7 @@
       .stop-grid { grid-template-columns: 1fr; }
       .reports-grid { grid-template-columns: 1fr; }
       .notif-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -488,6 +562,69 @@
         <div class="sys-name">HighLevel</div>
         <div class="sys-role">CRM + Follow-Up Engine</div>
         <div class="sys-desc">Receives the contact, creates a pipeline opportunity in the right division, and fires the 3-step follow-up sequence automatically.</div>
+      </div>
+    </div>
+
+    <!-- FEATURES CALLOUT -->
+    <div class="features-block">
+      <div class="features-heading">Your Six Feature Requests: All Built In</div>
+      <div class="features-sub">Everything you asked about in your follow-up is included in the build. Here's where each one lives.</div>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-check">&#10003;</div>
+          <div class="feature-text">
+            <h4>Exclude Specific Customers</h4>
+            <p>Named accounts (e.g., Irvine Co.) are on a permanent exclusion list. Make checks the customer name before anything reaches HighLevel. They never get a message.</p>
+            <span class="feature-where">Step 3 &rarr; Filter 2</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-check">&#10003;</div>
+          <div class="feature-text">
+            <h4>Exclude Contract Types</h4>
+            <p>PMs, yearly testings, and other recurring work are identified by job type in BuildOps. Make filters them out before they enter the sequence.</p>
+            <span class="feature-where">Step 3 &rarr; Filter 3</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-check">&#10003;</div>
+          <div class="feature-text">
+            <h4>Weekly Performance Report</h4>
+            <p>Every Monday, an automated report lands in your inbox with quotes sent, approvals, rejections, open bids, and close rate by division. No login required.</p>
+            <span class="feature-where">Step 8 &rarr; Weekly Report</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-check">&#10003;</div>
+          <div class="feature-text">
+            <h4>Daily Day 4 Call List</h4>
+            <p>Every morning, a list of contacts who finished their third touchpoint with no response is emailed to the team. These are the quotes that need a live call that day.</p>
+            <span class="feature-where">Step 8 &rarr; Daily Report</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-check">&#10003;</div>
+          <div class="feature-text">
+            <h4>Notifications on Approvals &amp; Questions</h4>
+            <p>The estimator gets notified the moment a quote is approved in BuildOps, and again when a customer replies. No more finding out late.</p>
+            <span class="feature-where">Step 7 &rarr; Real-Time Notifications</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-check">&#10003;</div>
+          <div class="feature-text">
+            <h4>Pause When Customer Needs More Time</h4>
+            <p>One click in HighLevel pauses the sequence for that contact. If the customer says it in a reply, AI intent detection can handle it automatically.</p>
+            <span class="feature-where">Step 6 &rarr; Stop Conditions</span>
+          </div>
+        </div>
+
       </div>
     </div>
 

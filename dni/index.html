@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local SEO Proposal — DNI Corp</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      line-height: 1.6;
+    }
+
+    /* Shared inner wrapper */
+    .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* Header */
+    .site-header {
+      background: #111;
+      padding: 24px 0;
+    }
+
+    /* Hero */
+    .hero {
+      background: #111;
+      padding: 52px 0 60px;
+      border-bottom: 4px solid #e87c26;
+    }
+    .hero .label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 38px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      max-width: 720px;
+      margin-bottom: 18px;
+    }
+    .hero h1 span { color: #e87c26; }
+    .hero p {
+      font-size: 17px;
+      color: #aaa;
+      max-width: 620px;
+      line-height: 1.75;
+    }
+
+    /* Main */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 52px 40px 80px;
+    }
+
+    /* Section label */
+    .section-label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+    }
+
+    /* White card */
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      border-left: 5px solid #e87c26;
+    }
+    .card.dark-border { border-left-color: #111; }
+    .card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #111;
+    }
+    .card p {
+      font-size: 16px;
+      color: #444;
+      max-width: 800px;
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+    .card p:last-child { margin-bottom: 0; }
+
+    /* Problem list */
+    .problem-list {
+      list-style: none;
+      margin-top: 16px;
+    }
+    .problem-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-top: 1px solid #f0f0f0;
+      font-size: 15px;
+      color: #333;
+      line-height: 1.6;
+    }
+    .problem-list li:first-child { border-top: none; padding-top: 0; }
+    .problem-list .dot {
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      background: #e87c26;
+      border-radius: 50%;
+      margin-top: 8px;
+    }
+
+    /* Deliverables grid */
+    .deliverables-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 8px;
+    }
+    .deliverable-item {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 22px 24px;
+      border-top: 3px solid #e87c26;
+    }
+    .deliverable-item h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .deliverable-item p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Process steps */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 8px;
+    }
+    .step {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 22px 24px;
+      position: relative;
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #111;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
+    .step h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .step p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Use case pills */
+    .use-cases {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .use-case {
+      background: #f0f0f0;
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+    }
+    .use-case span { color: #e87c26; margin-right: 4px; }
+
+    /* What's in the guide */
+    .guide-sections {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .guide-section-item {
+      background: #fff3eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .guide-section-item .tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #e87c26;
+      margin-bottom: 5px;
+    }
+    .guide-section-item p {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Investment block */
+    .investment-block {
+      background: #fff;
+      border-radius: 10px;
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      border-left: 5px solid #111;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 40px;
+      align-items: center;
+    }
+    .investment-block h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .investment-block p {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    .investment-block p:last-child { margin-bottom: 0; }
+    .investment-number {
+      text-align: center;
+      background: #f8f8f8;
+      border-radius: 10px;
+      padding: 28px 24px;
+    }
+    .investment-number .amount {
+      font-size: 48px;
+      font-weight: 900;
+      color: #111;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .investment-number .amount span { color: #111; }
+    .investment-number .label {
+      font-size: 13px;
+      color: #888;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .investment-number .sublabel {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 8px;
+    }
+    .investment-number .setup-line {
+      font-size: 13px;
+      color: #555;
+      font-weight: 600;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    /* Includes list */
+    .includes-list {
+      list-style: none;
+      margin-top: 14px;
+    }
+    .includes-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: #444;
+      padding: 7px 0;
+      border-top: 1px solid #f0f0f0;
+      line-height: 1.5;
+    }
+    .includes-list li:first-child { border-top: none; padding-top: 0; }
+    .includes-list .check {
+      flex-shrink: 0;
+      color: #e87c26;
+      font-weight: 800;
+      font-size: 14px;
+      margin-top: 1px;
+    }
+
+    /* Bottom note */
+    .bottom-note {
+      background: #111;
+      color: #fff;
+      border-radius: 10px;
+      padding: 40px 40px;
+      margin-top: 8px;
+    }
+    .bottom-note h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+    .bottom-note p {
+      font-size: 15px;
+      color: #aaa;
+      max-width: 700px;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .bottom-note p:last-child { margin-bottom: 0; }
+    .bottom-note strong { color: #e87c26; }
+    .bottom-note a:not(.cta-button) { color: #e87c26; }
+
+    /* Next step CTA */
+    .next-step {
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid #333;
+    }
+    .next-step p {
+      font-size: 16px;
+      color: #ccc;
+      margin-bottom: 16px;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .cta-button:hover { background: #cf6d1e; color: #fff; }
+
+    /* Signature section */
+    .signature-section {
+      margin-top: 28px;
+    }
+    .signature-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 40px 40px;
+      border: 2px solid #111;
+    }
+    .signature-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .signature-card > p {
+      font-size: 15px;
+      color: #555;
+      max-width: 720px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .agreement-summary {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.8;
+      border-left: 4px solid #e87c26;
+    }
+    .agreement-summary strong { color: #111; }
+    .sig-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr 200px;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .sig-field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 6px;
+    }
+    .sig-field input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid #ddd;
+      padding: 8px 0;
+      font-size: 16px;
+      color: #111;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .sig-field input:focus { border-bottom-color: #e87c26; }
+    .sig-field input[readonly] { color: #888; cursor: default; }
+    .sig-field input#sig-name {
+      font-style: italic;
+      font-size: 18px;
+    }
+    .agree-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 28px;
+      margin-top: 8px;
+    }
+    .agree-row input[type="checkbox"] {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: #e87c26;
+      cursor: pointer;
+    }
+    .agree-row label {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+    .sig-submit {
+      display: inline-block;
+      background: #111;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .sig-submit:hover { background: #333; }
+    .sig-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .sig-questions {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+    .sig-questions a { color: #e87c26; }
+    .sig-success {
+      display: none;
+      background: #f0faf0;
+      border: 2px solid #4caf50;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 20px;
+      font-size: 15px;
+      color: #2e7d32;
+      font-weight: 600;
+    }
+    .sig-error {
+      display: none;
+      color: #c62828;
+      font-size: 13px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .inner { padding-left: 20px; padding-right: 20px; }
+      .main { padding-left: 20px; padding-right: 20px; }
+      .deliverables-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .guide-sections { grid-template-columns: 1fr 1fr; }
+      .investment-block { grid-template-columns: 1fr; }
+      .proof-block { flex-direction: column; gap: 20px; }
+      .card { padding: 24px 20px; }
+      .bottom-note { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="inner">
+      <img src="guide-mktg-logo-white.png" alt="Guide MKTG" style="height:68px; display:block;">
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="inner">
+      <div class="label">Proposal</div>
+      <h1>DNI Corp<br><span>Local SEO</span></h1>
+      <p>Here's what we're going to do, what's included every month, and why it's the right move for getting DNI found by the Nashville businesses that need you.</p>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- What we heard -->
+    <div class="section-label">What We Heard</div>
+    <div class="card">
+      <h2>The work is there. The visibility isn't.</h2>
+      <p>DNI has three solid service lines, a real operation in Nashville, and years of experience behind it. None of that matters if the right businesses can't find you when they search. Right now, that's the problem.</p>
+      <p>Here's what stood out from our conversation:</p>
+      <ul class="problem-list">
+        <li><div class="dot"></div><span>When Nashville businesses search for printing, mailing, or merchandise services, DNI isn't showing up. That's not a brand problem. It's a visibility problem, and it's fixable.</span></li>
+        <li><div class="dot"></div><span>You have three distinct service lines — C3 critical communications, direct mail printing, and merchandise — and each one represents a set of keywords DNI should be ranking for and isn't.</span></li>
+        <li><div class="dot"></div><span>There's a real keyword opportunity here. Basic, foundational SEO work could move the needle fast because there's not much competition doing it right in this space locally.</span></li>
+        <li><div class="dot"></div><span>An SEO company recently sent an unsolicited invoice for work that was never done. That's the kind of thing that happens when you don't have a trusted partner you can actually verify results with.</span></li>
+        <li><div class="dot"></div><span>You need someone who shows their work, explains what they're doing and why, and ties every month's effort back to rankings you can actually see.</span></li>
+      </ul>
+    </div>
+
+    <!-- How it works -->
+    <div class="section-label">How It Works</div>
+    <div class="card dark-border">
+      <h2>Audit first. Then steady monthly work that compounds.</h2>
+      <p>We start by building the foundation right — a full audit of where you stand and what needs to happen. From there, it's consistent monthly work that builds over time. SEO isn't a one-time fix. It's a slow, steady climb that gets harder to displace the longer you're doing it.</p>
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>SEO Audit + Setup</h3>
+          <p>We audit your current rankings, site health, keyword gaps, and local citation accuracy. This tells us exactly where to start and what'll move the needle fastest for each of DNI's three service lines.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Monthly Local SEO Management</h3>
+          <p>Ongoing citation building, on-page optimization, and local content signals. Each month's work stacks on the last. You get a plain-language report showing where you rank and what changed.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>GBP Optimization + Management</h3>
+          <p>Your Google Business Profile is one of the highest-leverage local SEO assets you have. We keep it active with monthly posts, photo updates, and review monitoring so the map pack knows DNI is a live, trusted business.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- What you get -->
+    <div class="section-label">What You Get Every Month</div>
+    <div class="card">
+      <h2>Consistent work. Visible results. No mystery.</h2>
+      <p>Every month, you get real deliverables tied to real rankings. Here's what's included in the ongoing engagement:</p>
+
+      <div class="guide-sections">
+        <div class="guide-section-item">
+          <div class="tag">SEO Audit + Foundation</div>
+          <p>A complete review of your current rankings, technical issues, and keyword gaps across all three service lines. Done in month one. Sets everything else up.</p>
+        </div>
+        <div class="guide-section-item">
+          <div class="tag">Local Citation Management</div>
+          <p>Your business name, address, and phone number consistent and accurate across the directories that matter. Wrong citations quietly tank local rankings.</p>
+        </div>
+        <div class="guide-section-item">
+          <div class="tag">Keyword Targeting</div>
+          <p>The specific terms Nashville businesses use when they need printing, mailing, or merchandise. We go after the ones with real search volume and real conversion intent.</p>
+        </div>
+        <div class="guide-section-item">
+          <div class="tag">GBP Management</div>
+          <p>Monthly posts, photo updates, and review monitoring on your Google Business Profile. Keeps you active in the map pack and signals trust to Google.</p>
+        </div>
+        <div class="guide-section-item">
+          <div class="tag">Monthly Reporting</div>
+          <p>A clear, plain-language report each month. Where you rank, what moved, what's next. No jargon. No mystery. Just the numbers that matter.</p>
+        </div>
+        <div class="guide-section-item">
+          <div class="tag">Ongoing Optimization</div>
+          <p>Continuous improvements based on what's working and what isn't. SEO is a moving target. We adjust as rankings shift and opportunities open up.</p>
+        </div>
+      </div>
+
+      <div class="use-cases">
+        <div class="use-case"><span>→</span> C3 / Critical Communications</div>
+        <div class="use-case"><span>→</span> Direct Mail Printing</div>
+        <div class="use-case"><span>→</span> Merchandise &amp; Cups</div>
+        <div class="use-case"><span>→</span> Nashville Local Search</div>
+        <div class="use-case"><span>→</span> Google Business Profile</div>
+        <div class="use-case"><span>→</span> Map Pack Rankings</div>
+      </div>
+    </div>
+
+    <!-- Investment -->
+    <div class="section-label">Investment</div>
+    <div class="investment-block">
+      <div>
+        <h2>Straightforward pricing. No surprises.</h2>
+        <p>We start with a one-time audit and setup fee to build the foundation correctly. From there, it's a flat monthly rate for ongoing local SEO and GBP management covering all three of DNI's service lines.</p>
+        <p>This is a 12-month engagement. That's how long it takes to see real, compounding SEO results. After month 12, you can cancel anytime with 30 days written notice.</p>
+        <ul class="includes-list">
+          <li><div class="check">&#10003;</div> Full SEO audit covering rankings, technical health, and keyword gaps</li>
+          <li><div class="check">&#10003;</div> Local citation building and ongoing accuracy management</li>
+          <li><div class="check">&#10003;</div> Keyword targeting across all three service lines</li>
+          <li><div class="check">&#10003;</div> Google Business Profile management — posts, photos, review monitoring</li>
+          <li><div class="check">&#10003;</div> Monthly plain-language performance report</li>
+          <li><div class="check">&#10003;</div> 12-month commitment — cancel anytime after month 12 with 30 days notice</li>
+        </ul>
+      </div>
+      <div class="investment-number">
+        <div class="amount"><span>$</span>1,250</div>
+        <div class="label">Per Month</div>
+        <div class="sublabel">DNI Corp</div>
+        <div class="setup-line">+ $2,500 one-time setup fee</div>
+      </div>
+    </div>
+
+    <!-- Bottom note -->
+    <div class="bottom-note">
+      <h3>Ready to move forward?</h3>
+      <p>Sign below and we'll confirm within one business day. The audit kicks off in the first two weeks, and we'll get GBP optimized early so DNI starts picking up signals right away.</p>
+      <p>If you've got questions before signing, I'm easy to reach. Email me at <a href="mailto:josh@guidemktg.com">josh@guidemktg.com</a> or give me a call.</p>
+    </div>
+
+    <!-- Signature -->
+    <div class="signature-section">
+      <div class="section-label">Sign to Get Started</div>
+      <div class="signature-card">
+        <h3>Agreement &amp; Authorization</h3>
+        <p>By signing below, you authorize Guide MKTG to begin the local SEO engagement described in this proposal. An invoice for the $2,500 setup fee will be issued upon signing and is due upon receipt. Monthly invoices of $1,250 will begin in month one. This is a 12-month engagement.</p>
+
+        <div class="agreement-summary">
+          <strong>Scope:</strong> Local SEO + GBP Management — DNI Corp<br>
+          <strong>Deliverable:</strong> Ongoing local search visibility management across all three service lines<br>
+          <strong>Includes:</strong> SEO audit, citation management, keyword targeting, GBP management, monthly reporting<br>
+          <strong>Investment:</strong> $2,500 setup (due upon signing) + $1,250/month for 12 months<br>
+          <strong>Terms:</strong> 12-month commitment. Cancel anytime after month 12 with 30 days written notice.<br>
+          <strong>Payment:</strong> Check or ACH Transfer to Guide MKTG, 1800 92nd Ave, Zeeland, MI 49464
+        </div>
+
+        <div class="sig-fields">
+          <div class="sig-field">
+            <label>Full Name</label>
+            <input type="text" id="sig-name" placeholder="Sign your name" autocomplete="name">
+          </div>
+          <div class="sig-field">
+            <label>Title / Company</label>
+            <input type="text" id="sig-title" placeholder="e.g. Owner, DNI Corp" autocomplete="organization-title">
+          </div>
+          <div class="sig-field">
+            <label>Date</label>
+            <input type="text" id="sig-date" readonly>
+          </div>
+        </div>
+
+        <div class="agree-row">
+          <input type="checkbox" id="sig-agree">
+          <label for="sig-agree">I have read and agree to the scope, deliverables, and payment terms outlined above. I understand that work begins after the setup fee is received and that this constitutes a binding agreement between myself and Guide MKTG, LLC.</label>
+        </div>
+
+        <button class="sig-submit" id="sig-button" onclick="sendSignature()">Sign &amp; Send Agreement</button>
+        <div class="sig-error" id="sig-error"></div>
+        <div class="sig-success" id="sig-success">Your agreement has been sent to Guide MKTG. We'll be in touch within one business day to confirm receipt and get the audit kicked off. Thank you!</div>
+
+        <p class="sig-questions">Questions before signing? Email <a href="mailto:josh@guidemktg.com">josh@guidemktg.com</a></p>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+
+  <script>
+    document.getElementById('sig-date').value = new Date().toLocaleDateString('en-US', {
+      month: 'long', day: 'numeric', year: 'numeric'
+    });
+
+    async function sendSignature() {
+      const name   = document.getElementById('sig-name').value.trim();
+      const title  = document.getElementById('sig-title').value.trim();
+      const date   = document.getElementById('sig-date').value;
+      const agreed = document.getElementById('sig-agree').checked;
+      const errEl  = document.getElementById('sig-error');
+      const sucEl  = document.getElementById('sig-success');
+      const btn    = document.getElementById('sig-button');
+
+      errEl.style.display = 'none';
+      errEl.textContent = '';
+
+      if (!name)   { errEl.textContent = 'Please enter your full name.'; errEl.style.display = 'block'; return; }
+      if (!agreed) { errEl.textContent = 'Please check the agreement box to proceed.'; errEl.style.display = 'block'; return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const res = await fetch('/api/sign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            title: title || 'DNI Corp',
+            date,
+            proposalTitle: 'DNI Corp — Local SEO',
+            clientCompany: 'DNI Corp',
+            investment: '$2,500 setup + $1,250/month'
+          })
+        });
+
+        if (!res.ok) throw new Error('Server error');
+
+        sucEl.style.display = 'block';
+        sucEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (e) {
+        btn.disabled = false;
+        btn.textContent = 'Sign & Send Agreement';
+        errEl.textContent = 'Something went wrong. Please email josh@guidemktg.com directly.';
+        errEl.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>

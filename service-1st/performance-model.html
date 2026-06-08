@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service 1st — Performance Model</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      line-height: 1.6;
+    }
+
+    .hero {
+      background: #111;
+      padding: 48px 40px 52px;
+      border-bottom: 4px solid #e87c26;
+    }
+    .hero .label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: #e87c26; }
+    .hero p {
+      font-size: 16px;
+      color: #aaa;
+      max-width: 560px;
+    }
+
+    .main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 52px 40px 80px;
+    }
+
+    .section-label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+
+    /* ── RATE SELECTOR ── */
+    .rate-selector {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 48px;
+      border-left: 5px solid #e87c26;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .rate-selector .rate-label {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111;
+      white-space: nowrap;
+    }
+    .rate-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .rate-btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      background: #f8f8f8;
+      font-size: 20px;
+      font-weight: 900;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .rate-btn:hover {
+      border-color: #e87c26;
+      color: #e87c26;
+      background: #fff8f0;
+    }
+    .rate-btn.active {
+      background: #e87c26;
+      border-color: #e87c26;
+      color: #fff;
+    }
+    .rate-note {
+      font-size: 13px;
+      color: #aaa;
+      margin-left: auto;
+    }
+
+    /* ── DEAL COMPARISON ── */
+    .deal-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 52px;
+    }
+    .deal-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .deal-card .deal-header {
+      padding: 20px 28px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .deal-card.old .deal-header { background: #f0f0f0; color: #888; }
+    .deal-card.new .deal-header { background: #e87c26; color: #fff; }
+    .deal-card .deal-body { padding: 28px; }
+    .deal-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+    .deal-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .deal-row .lbl { color: #666; }
+    .deal-row .val { font-weight: 800; color: #111; }
+    .deal-row .val.bad { color: #c0392b; }
+    .deal-row .val.good { color: #2d8a4e; }
+    .deal-row .val.orange { color: #e87c26; }
+
+    /* ── ATTRIBUTION FLOW ── */
+    .attrib-section { margin-bottom: 52px; }
+    .attrib-flows {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .flow-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .flow-card .flow-header {
+      padding: 16px 24px;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .flow-card.yes .flow-header { background: #f0fff4; color: #1e6e3a; border-bottom: 2px solid #2d8a4e; }
+    .flow-card.no .flow-header  { background: #fff5f5; color: #c0392b; border-bottom: 2px solid #c0392b; }
+    .flow-steps { padding: 20px 24px; display: flex; flex-direction: column; }
+    .flow-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 10px 0;
+      position: relative;
+    }
+    .flow-item + .flow-item::before {
+      content: '';
+      position: absolute;
+      left: 13px;
+      top: -8px;
+      width: 2px;
+      height: 8px;
+      background: #ddd;
+    }
+    .flow-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .flow-card.yes .flow-dot { background: #e6f7ec; color: #1e6e3a; }
+    .flow-card.no .flow-dot  { background: #fff0f0; color: #c0392b; }
+    .flow-item .flow-text h4 { font-size: 13px; font-weight: 800; color: #111; margin-bottom: 2px; }
+    .flow-item .flow-text p  { font-size: 12px; color: #777; line-height: 1.5; margin: 0; }
+    .flow-result {
+      margin: 16px 24px 24px;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .flow-card.yes .flow-result { background: #e6f7ec; color: #1e6e3a; }
+    .flow-card.no .flow-result  { background: #fff0f0; color: #c0392b; }
+
+    /* ── MATH ── */
+    .math-section { margin-bottom: 52px; }
+    .math-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .math-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 24px 24px 20px;
+      border-top: 4px solid #e87c26;
+      transition: all 0.2s ease;
+    }
+    .math-card .division {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 8px;
+    }
+    .math-card .avg-invoice {
+      font-size: 28px;
+      font-weight: 900;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .math-card .avg-lbl { font-size: 12px; color: #999; margin-bottom: 16px; }
+    .math-card .cut-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-top: 1px solid #f0f0f0;
+    }
+    .math-card .cut-lbl { font-size: 12px; color: #888; }
+    .math-card .cut-val {
+      font-size: 20px;
+      font-weight: 900;
+      color: #e87c26;
+      transition: all 0.2s ease;
+    }
+
+    .math-summary {
+      background: #111;
+      border-radius: 12px;
+      padding: 32px 36px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .summary-item {
+      padding: 0 24px;
+      border-right: 1px solid #333;
+    }
+    .summary-item:first-child { padding-left: 0; }
+    .summary-item:last-child  { border-right: none; }
+    .summary-item .s-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .summary-item .s-value {
+      font-size: 26px;
+      font-weight: 900;
+      color: #fff;
+      transition: all 0.2s ease;
+    }
+    .summary-item .s-value.orange { color: #e87c26; }
+    .summary-item .s-value.green  { color: #4caf79; }
+    .summary-item .s-sub { font-size: 12px; color: #666; margin-top: 4px; }
+
+    /* ── RISK TABLE ── */
+    .risk-section { margin-bottom: 52px; }
+    .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .risk-card { background: #fff; border-radius: 12px; overflow: hidden; }
+    .risk-card .risk-header {
+      padding: 18px 28px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .risk-card.josh .risk-header { background: #fff8f0; color: #c0600a; border-bottom: 2px solid #e87c26; }
+    .risk-card.them .risk-header { background: #f0f4ff; color: #4a6fa5; border-bottom: 2px solid #4a6fa5; }
+    .risk-item {
+      padding: 14px 28px;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .risk-item:last-child { border-bottom: none; }
+    .risk-icon { flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+    .risk-text { color: #444; line-height: 1.5; }
+
+    /* ── BREAKEVEN ── */
+    .breakeven {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px 36px;
+      border-left: 5px solid #e87c26;
+    }
+    .breakeven h3 { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 20px; }
+    .be-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+    .be-row:last-child { border-bottom: none; }
+    .be-lbl { color: #666; }
+    .be-val { font-weight: 800; color: #111; transition: all 0.2s ease; }
+    .be-val.orange { color: #e87c26; }
+    .be-val.green  { color: #2d8a4e; }
+
+    @media (max-width: 700px) {
+      .main { padding: 32px 20px 60px; }
+      .hero { padding: 36px 20px 40px; }
+      .rate-selector { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .rate-note { margin-left: 0; }
+      .deal-compare { grid-template-columns: 1fr; }
+      .attrib-flows { grid-template-columns: 1fr; }
+      .math-grid { grid-template-columns: 1fr; }
+      .math-summary { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .summary-item { border-right: none; padding: 0; }
+      .risk-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="label">Internal Reference</div>
+    <h1>The <span id="hero-rate">5%</span> Performance Model<br>Visualized</h1>
+    <p>How the deal works, what triggers your cut, and what the math looks like at scale.</p>
+  </div>
+
+  <div class="main">
+
+    <!-- RATE SELECTOR -->
+    <div class="rate-selector">
+      <div class="rate-label">Choose your rate:</div>
+      <div class="rate-buttons">
+        <button class="rate-btn active" onclick="setRate(5)">5%</button>
+        <button class="rate-btn" onclick="setRate(4)">4%</button>
+        <button class="rate-btn" onclick="setRate(3)">3%</button>
+        <button class="rate-btn" onclick="setRate(2)">2%</button>
+      </div>
+      <div class="rate-note">Numbers update instantly across the page</div>
+    </div>
+
+    <!-- DEAL COMPARISON -->
+    <div class="section-label">Deal Structure</div>
+    <div class="deal-compare" style="margin-bottom:52px;">
+      <div class="deal-card old">
+        <div class="deal-header">Standard Deal (Original Proposal)</div>
+        <div class="deal-body">
+          <div class="deal-row"><span class="lbl">Build fee</span><span class="val bad">$14,000 upfront</span></div>
+          <div class="deal-row"><span class="lbl">Email deliverability</span><span class="val bad">$2,500 upfront</span></div>
+          <div class="deal-row"><span class="lbl">HighLevel monthly</span><span class="val bad">$897/month</span></div>
+          <div class="deal-row"><span class="lbl">Make.com monthly</span><span class="val bad">$21/month</span></div>
+          <div class="deal-row"><span class="lbl">SMS usage</span><span class="val bad">~$35/month</span></div>
+          <div class="deal-row"><span class="lbl">Total upfront</span><span class="val bad">$16,500</span></div>
+          <div class="deal-row"><span class="lbl">Ongoing monthly</span><span class="val bad">~$953/month</span></div>
+        </div>
+      </div>
+      <div class="deal-card new">
+        <div class="deal-header">Performance Deal</div>
+        <div class="deal-body">
+          <div class="deal-row"><span class="lbl">Build fee</span><span class="val good">$0 — Josh covers it</span></div>
+          <div class="deal-row"><span class="lbl">Email deliverability</span><span class="val good">$0 — Josh covers it</span></div>
+          <div class="deal-row"><span class="lbl">HighLevel monthly</span><span class="val good">$0 — Josh covers it</span></div>
+          <div class="deal-row"><span class="lbl">Make.com monthly</span><span class="val good">$0 — Josh covers it</span></div>
+          <div class="deal-row"><span class="lbl">SMS usage</span><span class="val good">$0 — Josh covers it</span></div>
+          <div class="deal-row"><span class="lbl">Total upfront</span><span class="val good">$0</span></div>
+          <div class="deal-row"><span class="lbl">Service 1st pays</span><span class="val orange" id="deal-rate-label">5% of attributed closes only</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATTRIBUTION -->
+    <div class="attrib-section">
+      <div class="section-label">What Counts as Your Cut</div>
+      <div class="attrib-flows">
+        <div class="flow-card yes">
+          <div class="flow-header">✓ Josh Gets Paid</div>
+          <div class="flow-steps">
+            <div class="flow-item">
+              <div class="flow-dot">1</div>
+              <div class="flow-text">
+                <h4>Quote marked "Sent" in BuildOps</h4>
+                <p>Estimator sends the quote as normal. Nothing changes on their end.</p>
+              </div>
+            </div>
+            <div class="flow-item">
+              <div class="flow-dot">2</div>
+              <div class="flow-text">
+                <h4>Passes all filters in Make.com</h4>
+                <p>Not a portal job, not a PM contract, not an excluded customer.</p>
+              </div>
+            </div>
+            <div class="flow-item">
+              <div class="flow-dot">3</div>
+              <div class="flow-text">
+                <h4>Contact enters HighLevel</h4>
+                <p>Make creates the contact and starts the follow-up sequence.</p>
+              </div>
+            </div>
+            <div class="flow-item">
+              <div class="flow-dot">4</div>
+              <div class="flow-text">
+                <h4>At least one message sent</h4>
+                <p>Email or SMS goes out to the customer. This is the key trigger.</p>
+              </div>
+            </div>
+            <div class="flow-item">
+              <div class="flow-dot">5</div>
+              <div class="flow-text">
+                <h4>Quote approved within 90 days</h4>
+                <p>BuildOps marks the quote as Approved. Make logs it as attributed.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flow-result" id="flow-yes-label">✓ Josh gets 5% of the invoice amount</div>
+        </div>
+
+        <div class="flow-card no">
+          <div class="flow-header">✗ Josh Gets Nothing</div>
+          <div class="flow-steps">
+            <div class="flow-item">
+              <div class="flow-dot">✗</div>
+              <div class="flow-text">
+                <h4>Quote filtered out</h4>
+                <p>Portal job, PM contract, or excluded customer. Never enters HL.</p>
+              </div>
+            </div>
+            <div class="flow-item">
+              <div class="flow-dot">✗</div>
+              <div class="flow-text">
+                <h4>Quote closes before first message</h4>
+                <p>Customer approves on Day 0 before automation fires. No message = no attribution.</p>
+              </div>
+            </div>
+            <div class="flow-item">
+              <div class="flow-dot">✗</div>
+              <div class="flow-text">
+                <h4>Quote goes past 90 days</h4>
+                <p>Approval comes in after the 90-day window. Too far out to attribute.</p>
+              </div>
+            </div>
+            <div class="flow-item">
+              <div class="flow-dot">✗</div>
+              <div class="flow-text">
+                <h4>Quote never closes</h4>
+                <p>Sequence runs all three touchpoints, no response, quote goes dark.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flow-result">✗ Josh gets $0. No risk to Service 1st.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MATH -->
+    <div class="math-section">
+      <div class="section-label">The Math</div>
+      <div class="math-grid">
+        <div class="math-card">
+          <div class="division">Plumbing — 70% of volume</div>
+          <div class="avg-invoice">$3,905</div>
+          <div class="avg-lbl">Average invoice (last 10 quotes)</div>
+          <div class="cut-row">
+            <span class="cut-lbl" id="plumb-cut-label">Josh's 5% per close</span>
+            <span class="cut-val" id="plumb-cut">$195</span>
+          </div>
+        </div>
+        <div class="math-card">
+          <div class="division">HVAC — ~15% of volume</div>
+          <div class="avg-invoice">$6,160</div>
+          <div class="avg-lbl">Average invoice (last 10 quotes)</div>
+          <div class="cut-row">
+            <span class="cut-lbl" id="hvac-cut-label">Josh's 5% per close</span>
+            <span class="cut-val" id="hvac-cut">$308</span>
+          </div>
+        </div>
+        <div class="math-card">
+          <div class="division">Electrical — ~15% of volume</div>
+          <div class="avg-invoice">$1,300</div>
+          <div class="avg-lbl">Average invoice (Chris's estimate)</div>
+          <div class="cut-row">
+            <span class="cut-lbl" id="elec-cut-label">Josh's 5% per close</span>
+            <span class="cut-val" id="elec-cut">$65</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="math-summary">
+        <div class="summary-item">
+          <div class="s-label">Quotes in system/month</div>
+          <div class="s-value">~525</div>
+          <div class="s-sub">After filter exclusions</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-label">Expected closes</div>
+          <div class="s-value">~166</div>
+          <div class="s-sub">At current ~35% close rate</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-label">Josh's gross/month</div>
+          <div class="s-value orange" id="monthly-gross">~$32,000</div>
+          <div class="s-sub">At current rates, no improvement needed</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-label">Josh's net/month</div>
+          <div class="s-value green" id="monthly-net">~$31,100</div>
+          <div class="s-sub">After ~$918 platform costs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RISK -->
+    <div class="risk-section">
+      <div class="section-label">Who Carries the Risk</div>
+      <div class="risk-grid">
+        <div class="risk-card josh">
+          <div class="risk-header">Josh's Risk</div>
+          <div class="risk-item"><span class="risk-icon">💸</span><span class="risk-text">Builds the entire system for free (~$14,000 of time)</span></div>
+          <div class="risk-item"><span class="risk-icon">💸</span><span class="risk-text">Covers $918/month in platform costs every month, regardless of closes</span></div>
+          <div class="risk-item"><span class="risk-icon">💸</span><span class="risk-text">Covers $2,500 email deliverability setup upfront</span></div>
+          <div class="risk-item"><span class="risk-icon">⏱</span><span class="risk-text">Gets paid nothing if the system produces zero attributed closes</span></div>
+        </div>
+        <div class="risk-card them">
+          <div class="risk-header">Service 1st's Risk</div>
+          <div class="risk-item"><span class="risk-icon">✓</span><span class="risk-text">Zero upfront cost</span></div>
+          <div class="risk-item"><span class="risk-icon">✓</span><span class="risk-text">Zero monthly fees</span></div>
+          <div class="risk-item"><span class="risk-icon">✓</span><span class="risk-text">Only pay when a deal actually closes through the system</span></div>
+          <div class="risk-item"><span class="risk-icon">⚠️</span><span class="risk-text" id="risk-pct-text">5% on attributed closes — but only on deals the system actually touched</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BREAKEVEN -->
+    <div class="section-label">Josh's Break-Even</div>
+    <div class="breakeven">
+      <h3>How long before Josh recoups his investment</h3>
+      <div class="be-row"><span class="be-lbl">Total Josh puts in (build + email setup)</span><span class="be-val">$16,500</span></div>
+      <div class="be-row"><span class="be-lbl">Monthly platform costs Josh absorbs</span><span class="be-val">$918/month</span></div>
+      <div class="be-row"><span class="be-lbl">Estimated monthly gross at current close rates</span><span class="be-val orange" id="be-gross">~$32,000</span></div>
+      <div class="be-row"><span class="be-lbl">Net after platform costs</span><span class="be-val orange" id="be-net">~$31,100/month</span></div>
+      <div class="be-row"><span class="be-lbl">Months to recoup full investment</span><span class="be-val green" id="be-months">Less than 1 month</span></div>
+      <div class="be-row"><span class="be-lbl">Upside if close rate improves</span><span class="be-val green" id="be-upside">Every extra close adds ~$195–$308</span></div>
+    </div>
+
+  </div>
+
+  <script>
+    const PLATFORM_COST = 918;
+    const INVESTMENT    = 16500;
+    const CLOSES        = 166;
+
+    const AVG = {
+      plumbing:   3905,
+      hvac:       6160,
+      electrical: 1300
+    };
+
+    // Weighted blended average (70/15/15 split)
+    const BLENDED = AVG.plumbing * 0.70 + AVG.hvac * 0.15 + AVG.electrical * 0.15;
+
+    function fmt(n) {
+      return '$' + Math.round(n).toLocaleString();
+    }
+
+    function beMonths(net) {
+      const m = INVESTMENT / net;
+      if (m < 1)   return 'Less than 1 month';
+      if (m < 1.5) return 'About 6 weeks';
+      if (m < 2)   return 'About 2 months';
+      return Math.ceil(m) + ' months';
+    }
+
+    function setRate(pct) {
+      const r = pct / 100;
+
+      // Update buttons
+      document.querySelectorAll('.rate-btn').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.textContent) === pct);
+      });
+
+      // Hero title
+      document.getElementById('hero-rate').textContent = pct + '%';
+
+      // Deal card
+      document.getElementById('deal-rate-label').textContent = pct + '% of attributed closes only';
+
+      // Attribution flow result
+      document.getElementById('flow-yes-label').textContent = '✓ Josh gets ' + pct + '% of the invoice amount';
+
+      // Per-division cuts
+      const plumbCut = AVG.plumbing   * r;
+      const hvacCut  = AVG.hvac       * r;
+      const elecCut  = AVG.electrical * r;
+
+      document.getElementById('plumb-cut').textContent       = fmt(plumbCut);
+      document.getElementById('hvac-cut').textContent        = fmt(hvacCut);
+      document.getElementById('elec-cut').textContent        = fmt(elecCut);
+      document.getElementById('plumb-cut-label').textContent = "Josh's " + pct + "% per close";
+      document.getElementById('hvac-cut-label').textContent  = "Josh's " + pct + "% per close";
+      document.getElementById('elec-cut-label').textContent  = "Josh's " + pct + "% per close";
+
+      // Monthly numbers
+      const gross = CLOSES * BLENDED * r;
+      const net   = gross - PLATFORM_COST;
+
+      document.getElementById('monthly-gross').textContent = '~' + fmt(gross);
+      document.getElementById('monthly-net').textContent   = '~' + fmt(net);
+
+      // Risk card
+      document.getElementById('risk-pct-text').textContent =
+        pct + '% on attributed closes — but only on deals the system actually touched';
+
+      // Break-even
+      document.getElementById('be-gross').textContent  = '~' + fmt(gross);
+      document.getElementById('be-net').textContent    = '~' + fmt(net) + '/month';
+      document.getElementById('be-months').textContent = beMonths(net);
+      document.getElementById('be-upside').textContent =
+        'Every extra close adds ~' + fmt(AVG.plumbing * r) + '–' + fmt(AVG.hvac * r);
+    }
+
+    // Init at 5%
+    setRate(5);
+  </script>
+
+</body>
+</html>
