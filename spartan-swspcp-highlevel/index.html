@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HighLevel Communications Setup Proposal: SWSPCP / Spartan Marketing</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      line-height: 1.6;
+    }
+
+    .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .site-header {
+      background: #111;
+      padding: 24px 0;
+    }
+    .site-header .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-header .brand {
+      font-size: 20px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .site-header .brand span { color: #e87c26; }
+    .site-header .sub {
+      font-size: 12px;
+      color: #888;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      background: #111;
+      padding: 52px 0 60px;
+      border-bottom: 4px solid #e87c26;
+    }
+    .hero .label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 38px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      max-width: 720px;
+      margin-bottom: 18px;
+    }
+    .hero h1 span { color: #e87c26; }
+    .hero p {
+      font-size: 17px;
+      color: #aaa;
+      max-width: 620px;
+      line-height: 1.75;
+    }
+
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 52px 40px 80px;
+    }
+
+    .section-label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      border-left: 5px solid #e87c26;
+    }
+    .card.dark-border { border-left-color: #111; }
+    .card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #111;
+    }
+    .card p {
+      font-size: 16px;
+      color: #444;
+      max-width: 800px;
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+    .card p:last-child { margin-bottom: 0; }
+
+    .automation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .automation-item {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 20px 22px;
+      border-top: 3px solid #e87c26;
+    }
+    .automation-item h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 6px;
+    }
+    .automation-item p {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .automation-item .seq-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #e87c26;
+      margin-bottom: 6px;
+    }
+
+    .includes-list {
+      list-style: none;
+      margin-top: 14px;
+    }
+    .includes-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: #444;
+      padding: 7px 0;
+      border-top: 1px solid #f0f0f0;
+      line-height: 1.5;
+    }
+    .includes-list li:first-child { border-top: none; padding-top: 0; }
+    .includes-list .check {
+      flex-shrink: 0;
+      color: #e87c26;
+      font-weight: 800;
+      font-size: 14px;
+      margin-top: 1px;
+    }
+
+    .investment-section {
+      margin-bottom: 28px;
+    }
+    .investment-row {
+      background: #fff;
+      border-radius: 10px;
+      padding: 32px 40px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 40px;
+      align-items: center;
+      border-left: 5px solid #111;
+    }
+    .investment-row.orange-border { border-left-color: #e87c26; }
+    .investment-row h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .investment-row p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    .investment-number {
+      text-align: center;
+      background: #f8f8f8;
+      border-radius: 10px;
+      padding: 24px 20px;
+    }
+    .investment-number .amount {
+      font-size: 42px;
+      font-weight: 900;
+      color: #111;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .investment-number .amount.orange { color: #e87c26; }
+    .investment-number .ilabel {
+      font-size: 12px;
+      color: #888;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .investment-number .sublabel {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 6px;
+    }
+
+    .caveat-block {
+      background: #fffbf0;
+      border: 2px solid #f0c040;
+      border-radius: 10px;
+      padding: 24px 32px;
+      margin-bottom: 28px;
+    }
+    .caveat-block h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .caveat-block p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .timeline-step {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 20px 20px;
+    }
+    .timeline-step .week {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #e87c26;
+      margin-bottom: 6px;
+    }
+    .timeline-step h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 6px;
+    }
+    .timeline-step p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .bottom-note {
+      background: #111;
+      color: #fff;
+      border-radius: 10px;
+      padding: 40px 40px;
+      margin-top: 8px;
+      margin-bottom: 28px;
+    }
+    .bottom-note h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+    .bottom-note p {
+      font-size: 15px;
+      color: #aaa;
+      max-width: 700px;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .bottom-note p:last-child { margin-bottom: 0; }
+    .bottom-note strong { color: #e87c26; }
+    .bottom-note a:not(.cta-button) { color: #e87c26; }
+
+    .signature-section { margin-top: 28px; }
+    .signature-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 40px 40px;
+      border: 2px solid #111;
+    }
+    .signature-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .signature-card > p {
+      font-size: 15px;
+      color: #555;
+      max-width: 720px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .agreement-summary {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.9;
+      border-left: 4px solid #e87c26;
+    }
+    .agreement-summary strong { color: #111; }
+    .sig-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr 200px;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .sig-field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 6px;
+    }
+    .sig-field input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid #ddd;
+      padding: 8px 0;
+      font-size: 16px;
+      color: #111;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .sig-field input:focus { border-bottom-color: #e87c26; }
+    .sig-field input[readonly] { color: #888; cursor: default; }
+    .sig-field input#sig-name { font-style: italic; font-size: 18px; }
+    .agree-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 28px;
+      margin-top: 8px;
+    }
+    .agree-row input[type="checkbox"] {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: #e87c26;
+      cursor: pointer;
+    }
+    .agree-row label {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+    .sig-submit {
+      display: inline-block;
+      background: #111;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .sig-submit:hover { background: #333; }
+    .sig-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .sig-questions {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+    .sig-questions a { color: #e87c26; }
+    .sig-success {
+      display: none;
+      background: #f0faf0;
+      border: 2px solid #4caf50;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 20px;
+      font-size: 15px;
+      color: #2e7d32;
+      font-weight: 600;
+    }
+    .sig-error {
+      display: none;
+      color: #c62828;
+      font-size: 13px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 800px) {
+      .inner { padding-left: 20px; padding-right: 20px; }
+      .main { padding-left: 20px; padding-right: 20px; }
+      .automation-grid { grid-template-columns: 1fr; }
+      .timeline-steps { grid-template-columns: 1fr; }
+      .investment-row { grid-template-columns: 1fr; }
+      .sig-fields { grid-template-columns: 1fr; }
+      .card { padding: 24px 20px; }
+      .bottom-note { padding: 28px 20px; }
+      .site-header .sub { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">Applied AI <span>Works</span></div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div style="font-size:12px; color:#555; font-weight:500; letter-spacing:1px; text-transform:uppercase;">In partnership with</div>
+        <img src="../service-1st/guide-mktg-logo-white.png" alt="Guide MKTG" style="height:60px; display:block;">
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="inner">
+      <div class="label">Proposal: Subcontract</div>
+      <h1>SWSPCP / Spartan Marketing<br><span>HighLevel Communications Setup</span></h1>
+      <p>The full build-out of the HighLevel subaccount, contact import, and all lifecycle automation sequences for the Society of Wetland Scientists Professional Certification Program.</p>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="section-label">The Scope</div>
+    <div class="card">
+      <h2>14 automation sequences. One blank subaccount. A lot of conditional logic.</h2>
+      <p>Spartan Marketing is rebuilding SWSPCP's entire certification operations platform on WordPress. HighLevel is the communications layer. Every triggered email in the system runs through it. That includes application confirmations, reference requests, renewal reminders, approval and decline notices, account activations, and more.</p>
+      <p>The subaccount will be set up fresh under Spartan's HL account. Guide MKTG builds and tests everything inside it: all sequences, contact segmentation, conditional logic, and stop triggers. Spartan provides email copy and the final SWSPCP contact list. We do the build. <a href="flow.html" style="color:#e87c26; font-weight:700;">See the full automation map &rarr;</a></p>
+      <p>This is not a simple drip campaign. Several of these sequences have meaningful conditional logic: the renewal reminder series has to stop the moment a renewal is submitted, reference notifications have to fire per individual reference as they come in, and the account activation sends need to go out in batches to roughly 3,500 contacts rather than all at once. That's the work.</p>
+    </div>
+
+    <div class="section-label">What Gets Built</div>
+    <div class="card dark-border">
+      <h2>Every automated touchpoint in the certification lifecycle.</h2>
+      <p>The sequences below map directly to the applicant, reviewer, and certificate holder workflows described in the Spartan proposal. Email copy for each touchpoint is provided by Spartan/SWSPCP. Our job is the configuration, logic, and testing.</p>
+
+      <div class="automation-grid">
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 1</div>
+          <h3>Account Creation Confirmation</h3>
+          <p>Triggered on new account registration. Confirms the account and sets expectations before the applicant begins their application.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 2</div>
+          <h3>Abandoned Application Reminder Series</h3>
+          <p>Multi-step reminder series for applicants who start but don't submit. Stops automatically the moment the application is submitted. Eliminates the lost-application problem the current site has.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 3</div>
+          <h3>Application Submitted Confirmation</h3>
+          <p>Fires on submission. Confirms receipt and sets realistic expectations on timeline (24-48 hours for initial decision).</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 4</div>
+          <h3>Reference Request (Form C)</h3>
+          <p>Sends the Form C link to each of 3 references individually when required. Tracks which references have responded and which are still outstanding.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 5</div>
+          <h3>Reference Received Notification</h3>
+          <p>Notifies the applicant each time an individual reference submits their Form C, so they can track progress without contacting staff.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 6</div>
+          <h3>All References Complete Notification</h3>
+          <p>Fires when the third reference submits. Tells the applicant the final review window (24-72 hours) so expectations are set before staff have to answer questions.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 7</div>
+          <h3>Application Approved</h3>
+          <p>Approval notification with instructions to access the certificate holder portal and download the certificate. Triggers for all certification paths.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 8</div>
+          <h3>Application Declined</h3>
+          <p>Decline notification with the reviewer's reason pulled in dynamically. Includes next steps for reapplication. No reason, no send.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 9</div>
+          <h3>Incomplete Application Kickback</h3>
+          <p>Notifies the applicant when a reviewer marks the application incomplete, includes the reviewer's notes on what is missing, and prompts them to correct and resubmit.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 10</div>
+          <h3>Renewal Reminder Series (90 / 60 / 30 Days)</h3>
+          <p>Three-touch renewal reminder series. The stop trigger is the critical piece here: the moment a renewal application is submitted, all pending reminders in the sequence cancel. No nagging people who already renewed.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 11</div>
+          <h3>Outside Credit (CEU) Decision Notice</h3>
+          <p>Notifies the certificate holder when an outside credit submission is approved or declined, with the decision detail pulled in dynamically.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 12</div>
+          <h3>Annual Maintenance Fee Reminder</h3>
+          <p>Annual reminder to certificate holders that the maintenance fee is due, with a direct link to the payment screen.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 13</div>
+          <h3>Short Course Provider Submission / Approval</h3>
+          <p>Submission confirmation for third-party providers and approval or decline notification once the committee has reviewed.</p>
+        </div>
+
+        <div class="automation-item">
+          <div class="seq-label">Sequence 14</div>
+          <h3>Phased Account Activation (3,500 Contacts)</h3>
+          <p>Account setup emails sent to the existing certificate holder database in batches, not all at once. Prevents a deliverability spike and gives staff time to handle support questions in waves.</p>
+        </div>
+
+      </div>
+
+      <div style="margin-top:24px; background:#f8f8f8; border-radius:8px; padding:16px 20px; border-left:3px solid #e87c26; font-size:14px; color:#555; line-height:1.6;">
+        <strong style="color:#111;">Also included:</strong> Subaccount configuration, contact import and segmentation from the SWSPCP CSV, and full QA of every sequence end-to-end before handoff to Spartan.
+      </div>
+
+      <div style="margin-top:16px; background:#fff3e0; border-radius:8px; padding:20px 22px; border-left:4px solid #e65100;">
+        <div style="font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#e65100; margin-bottom:6px;">Pre-Launch Requirement</div>
+        <strong style="color:#111; font-size:14px;">Email Deliverability Setup</strong>
+        <p style="font-size:13px; color:#555; line-height:1.6; margin-top:6px; margin-bottom:0;">Before any sequence fires, the sending domain has to be ready. This means configuring SPF, DKIM, and DMARC DNS records for the SWSPCP sending subdomain in HL, then running a warming schedule (starting with low send volume and ramping up over 2-3 weeks) before the Sequence 14 activation blast goes to 3,500 contacts. It doesn't matter how engaged that list is. A brand-new sending domain has zero reputation with Gmail, Outlook, and the rest. Skip warming and the activation emails land in spam on day one.</p>
+      </div>
+    </div>
+
+    <div class="section-label">What's Not Included</div>
+    <div class="caveat-block">
+      <h3>Email copy is on Spartan and SWSPCP.</h3>
+      <p>We are building the automation architecture, not writing the emails. Spartan or SWSPCP provides the copy for each touchpoint before we build that sequence. If copy arrives late, it delays that sequence. We will flag dependencies as we go so nothing holds up the overall timeline. If Spartan needs copy written as an add-on, that can be scoped separately.</p>
+    </div>
+
+    <div class="section-label">Investment</div>
+    <div class="investment-section">
+
+      <div class="investment-row orange-border">
+        <div>
+          <h3>HighLevel Setup: Full Build</h3>
+          <p>Subaccount configuration, contact import and segmentation, all 14 automation sequences built and tested, conditional logic and stop triggers throughout, and QA sign-off before handoff. Flat fee. No hourly overages.</p>
+          <ul class="includes-list">
+            <li><div class="check">&#10003;</div> Subaccount configured and ready inside Spartan's HL account</li>
+            <li><div class="check">&#10003;</div> SWSPCP contact database imported and segmented</li>
+            <li><div class="check">&#10003;</div> All 14 automation sequences built with conditional logic and stop triggers</li>
+            <li><div class="check">&#10003;</div> Phased batch logic for the ~3,500 contact account activation rollout</li>
+            <li><div class="check">&#10003;</div> Full end-to-end QA on every sequence before handoff</li>
+            <li><div class="check">&#10003;</div> Email copy provided by Spartan/SWSPCP (not included in this scope)</li>
+          </ul>
+        </div>
+        <div class="investment-number">
+          <div class="amount orange">$7,900</div>
+          <div class="ilabel">Flat Fee</div>
+          <div class="sublabel">50% at kickoff / 50% at handoff<br>Invoiced by Applied AI Works</div>
+        </div>
+      </div>
+
+      <div class="investment-row orange-border">
+        <div>
+          <h3>Email Deliverability Setup</h3>
+          <p>Before any sequence fires, the sending domain has to have a reputation. This covers DNS authentication (SPF, DKIM, DMARC) for the SWSPCP sending subdomain, a managed 2-3 week warming schedule, and bounce/complaint monitoring throughout. Handled by a dedicated email deliverability specialist. Without this, the Sequence 14 activation blast lands in spam on launch day.</p>
+          <ul class="includes-list">
+            <li><div class="check">&#10003;</div> SPF, DKIM, and DMARC DNS records configured for SWSPCP sending subdomain</li>
+            <li><div class="check">&#10003;</div> Managed warming schedule: ramped send volume over 2-3 weeks</li>
+            <li><div class="check">&#10003;</div> Bounce rate and spam complaint monitoring throughout the warming period</li>
+            <li><div class="check">&#10003;</div> Domain cleared and ready before Sequence 14 activation blast fires</li>
+          </ul>
+        </div>
+        <div class="investment-number">
+          <div class="amount orange">$2,500</div>
+          <div class="ilabel">One-Time</div>
+          <div class="sublabel">Invoiced by Guide MKTG</div>
+        </div>
+      </div>
+
+      <div class="investment-row" style="border-left-color:#111;">
+        <div>
+          <h3>Total Investment</h3>
+          <p>HighLevel build plus email deliverability setup. Both required to launch cleanly.</p>
+        </div>
+        <div class="investment-number">
+          <div class="amount orange">$10,400</div>
+          <div class="ilabel">Total</div>
+          <div class="sublabel">HL build + deliverability</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-label">Timeline</div>
+    <div class="card dark-border">
+      <h2>Sequenced alongside the WordPress build. Ready before launch.</h2>
+      <div class="timeline-steps">
+        <div class="timeline-step">
+          <div class="week">Week 1</div>
+          <h3>Subaccount Setup + Import</h3>
+          <p>Subaccount configured, contact CSV imported, segmentation complete. Sequences with copy in hand begin immediately.</p>
+        </div>
+        <div class="timeline-step">
+          <div class="week">Weeks 2-3</div>
+          <h3>Automation Build</h3>
+          <p>All 14 sequences built as copy is delivered. Complex sequences (renewal reminders, reference tracking, batch activation) get built and tested first given their conditional logic.</p>
+        </div>
+        <div class="timeline-step">
+          <div class="week">Week 4</div>
+          <h3>QA + Handoff</h3>
+          <p>Every sequence tested end-to-end. Stop triggers and conditional logic verified. Spartan reviews and approves. Ready for site launch.</p>
+        </div>
+      </div>
+      <p style="margin-top:20px; font-size:14px; color:#888; line-height:1.6;">Timeline assumes copy is delivered on a rolling basis during the build window. If all copy arrives in week 1, we finish early. If it trickles in late, we adjust and communicate. The critical path is copy delivery, not the build itself.</p>
+    </div>
+
+    <div class="bottom-note">
+      <h3>Ready to move forward?</h3>
+      <p>Sign below and I'll be in touch within one business day to confirm and get the kickoff on the calendar. The one thing we need to start: admin access to the SWSPCP subaccount inside Spartan's HighLevel. Once that's set, we can begin configuration immediately and start building as copy arrives.</p>
+      <p>Questions before signing? Reach me at <a href="mailto:josh@guidemktg.com">josh@guidemktg.com</a>.</p>
+    </div>
+
+    <div class="signature-section">
+      <div class="section-label">Sign to Get Started</div>
+      <div class="signature-card">
+        <h3>Agreement &amp; Authorization</h3>
+        <p>By signing below, you authorize Guide MKTG / Applied AI Works to begin the HighLevel communications setup engagement described in this proposal. An invoice for $3,950 (50% of the flat fee) will be issued upon signing and is due at project kickoff.</p>
+
+        <div class="agreement-summary">
+          <strong>Scope:</strong> HighLevel Communications Setup: SWSPCP / Spartan Marketing<br>
+          <strong>HL Build:</strong> $7,900 total ($3,950 at kickoff, $3,950 at handoff), invoiced by Applied AI Works<br>
+          <strong>Email Deliverability:</strong> $2,500 one-time, invoiced by Guide MKTG<br>
+          <strong>Total:</strong> $10,400<br>
+          <strong>Copy:</strong> All email copy provided by Spartan Marketing / SWSPCP. Copy delays may affect sequence completion dates.<br>
+          <strong>Payment:</strong> Check or ACH Transfer to Guide MKTG, LLC / 1800 92nd Ave, Zeeland, MI 49464
+        </div>
+
+        <div class="sig-fields">
+          <div class="sig-field">
+            <label>Full Name</label>
+            <input type="text" id="sig-name" placeholder="Sign your name" autocomplete="name">
+          </div>
+          <div class="sig-field">
+            <label>Title / Company</label>
+            <input type="text" id="sig-title" placeholder="e.g. David Lillard, Spartan Marketing" autocomplete="organization-title">
+          </div>
+          <div class="sig-field">
+            <label>Date</label>
+            <input type="text" id="sig-date" readonly>
+          </div>
+        </div>
+
+        <div class="agree-row">
+          <input type="checkbox" id="sig-agree">
+          <label for="sig-agree">I have read and agree to the scope, deliverables, and payment terms outlined above. I understand that build work begins after the first payment is received. This constitutes a binding agreement between myself and Applied AI Works / Guide MKTG, LLC.</label>
+        </div>
+
+        <button class="sig-submit" id="sig-button" onclick="sendSignature()">Sign &amp; Send Agreement</button>
+        <div class="sig-error" id="sig-error"></div>
+        <div class="sig-success" id="sig-success">Your agreement has been received. Josh will be in touch within one business day to confirm and get kickoff scheduled. Thank you!</div>
+
+        <p class="sig-questions">Questions before signing? Email <a href="mailto:josh@guidemktg.com">josh@guidemktg.com</a></p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.getElementById('sig-date').value = new Date().toLocaleDateString('en-US', {
+      month: 'long', day: 'numeric', year: 'numeric'
+    });
+
+    async function sendSignature() {
+      const name   = document.getElementById('sig-name').value.trim();
+      const title  = document.getElementById('sig-title').value.trim();
+      const date   = document.getElementById('sig-date').value;
+      const agreed = document.getElementById('sig-agree').checked;
+      const errEl  = document.getElementById('sig-error');
+      const sucEl  = document.getElementById('sig-success');
+      const btn    = document.getElementById('sig-button');
+
+      errEl.style.display = 'none';
+      errEl.textContent = '';
+
+      if (!name)   { errEl.textContent = 'Please enter your full name.'; errEl.style.display = 'block'; return; }
+      if (!agreed) { errEl.textContent = 'Please check the agreement box to proceed.'; errEl.style.display = 'block'; return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const res = await fetch('/api/sign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            title: title || 'Spartan Marketing',
+            date,
+            proposalTitle: 'SWSPCP / Spartan Marketing: HighLevel Communications Setup',
+            clientCompany: 'Spartan Marketing',
+            investment: '$7,900 flat fee'
+          })
+        });
+
+        if (!res.ok) throw new Error('Server error');
+
+        sucEl.style.display = 'block';
+        sucEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (e) {
+        btn.disabled = false;
+        btn.textContent = 'Sign & Send Agreement';
+        errEl.textContent = 'Something went wrong. Please email josh@guidemktg.com directly.';
+        errEl.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>

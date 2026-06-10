@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HighLevel Automation Map: SWSPCP</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      line-height: 1.5;
+    }
+
+    .site-header {
+      background: #111;
+      padding: 20px 0;
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand { font-size: 18px; font-weight: 900; color: #fff; }
+    .brand span { color: #e87c26; }
+    .back-link {
+      font-size: 13px;
+      color: #e87c26;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    .hero {
+      background: #111;
+      padding: 40px 0 48px;
+      border-bottom: 4px solid #e87c26;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    .hero .label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 30px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .hero h1 span { color: #e87c26; }
+    .hero p { font-size: 15px; color: #aaa; max-width: 600px; }
+
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+
+    /* ---- SECTION LABELS ---- */
+    .section-label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 24px;
+    }
+
+    /* ---- ARCHITECTURE DIAGRAM ---- */
+    .arch-diagram {
+      background: #fff;
+      border-radius: 12px;
+      padding: 36px 40px;
+      margin-bottom: 40px;
+      border-left: 5px solid #111;
+    }
+    .arch-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 0;
+    }
+    .arch-box {
+      flex: 1;
+      background: #f8f8f8;
+      border-radius: 10px;
+      padding: 22px 20px;
+      text-align: center;
+      border-top: 4px solid #e87c26;
+    }
+    .arch-box.dark { border-top-color: #111; background: #111; }
+    .arch-box.dark .arch-box-title { color: #fff; }
+    .arch-box.dark .arch-box-sub { color: #888; }
+    .arch-box-icon { font-size: 28px; margin-bottom: 8px; }
+    .arch-box-title { font-size: 15px; font-weight: 800; color: #111; margin-bottom: 4px; }
+    .arch-box-sub { font-size: 12px; color: #888; line-height: 1.4; }
+    .arch-arrow {
+      flex: 0 0 60px;
+      text-align: center;
+      font-size: 22px;
+      color: #e87c26;
+      font-weight: 900;
+    }
+
+    /* ---- MAIN FLOW ---- */
+    .flow-section {
+      margin-bottom: 48px;
+    }
+
+    .flow-track {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Each row = trigger + arrow + email card */
+    .flow-row {
+      display: grid;
+      grid-template-columns: 260px 60px 1fr;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+
+    .trigger-box {
+      background: #111;
+      color: #fff;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+      position: relative;
+    }
+    .trigger-box .t-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #e87c26;
+      margin-bottom: 4px;
+    }
+    .trigger-box.wp { background: #21759b; }
+    .trigger-box.wp .t-label { color: #7fc4e6; }
+    .trigger-box.timer { background: #2e7d32; }
+    .trigger-box.timer .t-label { color: #81c784; }
+    .trigger-box.admin { background: #5c2d91; }
+    .trigger-box.admin .t-label { color: #ce93d8; }
+    .trigger-box.reviewer { background: #b94a00; }
+    .trigger-box.reviewer .t-label { color: #ffb74d; }
+
+    .flow-arrow-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 16px;
+      font-size: 20px;
+      color: #e87c26;
+      font-weight: 900;
+    }
+
+    .email-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 14px 18px;
+      border-left: 4px solid #e87c26;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .email-card .seq-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: #e87c26;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .email-card .seq-body h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 3px;
+    }
+    .email-card .seq-body p {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+    }
+    .email-card .seq-body .to-tag {
+      display: inline-block;
+      background: #f0f0f0;
+      border-radius: 3px;
+      padding: 1px 7px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 5px;
+    }
+    .email-card.stop-logic { border-left-color: #2e7d32; }
+    .email-card.stop-logic .seq-num { background: #2e7d32; }
+    .email-card.multi-fire { border-left-color: #5c2d91; }
+    .email-card.multi-fire .seq-num { background: #5c2d91; }
+
+    /* connector line between rows in a group */
+    .flow-group {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 28px;
+      border-left: 5px solid #e87c26;
+    }
+    .flow-group.green { border-left-color: #2e7d32; }
+    .flow-group.purple { border-left-color: #5c2d91; }
+    .flow-group h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .flow-group .group-sub {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .divider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0;
+      padding-left: 260px;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: #eee;
+    }
+    .divider-label {
+      font-size: 11px;
+      color: #bbb;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+    }
+
+    /* branch for approve/decline */
+    .branch-row {
+      display: grid;
+      grid-template-columns: 260px 60px 1fr;
+      align-items: stretch;
+      margin-bottom: 4px;
+    }
+    .branch-trigger-spacer {
+      /* empty, just for alignment */
+    }
+    .branch-emails {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* legend */
+    .legend {
+      background: #fff;
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+    .legend-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-right: 8px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #555;
+    }
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-bar {
+      width: 16px;
+      height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* count badges */
+    .seq-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #888;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    /* summary grid at bottom */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .summary-stat {
+      background: #fff;
+      border-radius: 10px;
+      padding: 24px 20px;
+      text-align: center;
+      border-top: 4px solid #e87c26;
+    }
+    .summary-stat .num {
+      font-size: 36px;
+      font-weight: 900;
+      color: #e87c26;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .summary-stat .lbl {
+      font-size: 12px;
+      color: #888;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    @media (max-width: 900px) {
+      .flow-row { grid-template-columns: 1fr; }
+      .flow-arrow-col { padding: 4px 0; justify-content: flex-start; padding-left: 20px; }
+      .divider-row { padding-left: 0; }
+      .arch-arrow { display: none; }
+      .arch-row { flex-wrap: wrap; gap: 12px; }
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+      .header-inner { padding: 0 20px; }
+      .hero-inner { padding: 0 20px; }
+      .main { padding: 32px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">Applied AI <span>Works</span></div>
+      <a href="index.html" class="back-link">&larr; Back to Proposal</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="label">Automation Map</div>
+      <h1>SWSPCP: <span>HighLevel Sequences, Visualized</span></h1>
+      <p>Every automated email in the system, what triggers it, who gets it, and when it stops. All 14 sequences mapped out.</p>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- ARCHITECTURE -->
+    <div class="section-label">How It Works</div>
+    <p class="section-title">Three layers. WordPress triggers. HighLevel sends. People receive.</p>
+
+    <div class="arch-diagram">
+      <div class="arch-row">
+        <div class="arch-box dark">
+          <div class="arch-box-icon">&#9881;</div>
+          <div class="arch-box-title">WordPress Platform</div>
+          <div class="arch-box-sub">Application system, reviewer portal, certificate holder portal, Stripe payments</div>
+        </div>
+        <div class="arch-arrow">&#8594;</div>
+        <div class="arch-box">
+          <div class="arch-box-icon">&#128233;</div>
+          <div class="arch-box-title">HighLevel</div>
+          <div class="arch-box-sub">Receives the trigger, runs the right automation sequence, sends the email</div>
+        </div>
+        <div class="arch-arrow">&#8594;</div>
+        <div class="arch-box">
+          <div class="arch-box-icon">&#128100;</div>
+          <div class="arch-box-title">Applicants</div>
+          <div class="arch-box-sub">Confirmations, status updates, decisions, reference links</div>
+        </div>
+        <div class="arch-arrow">&#8594;</div>
+        <div class="arch-box">
+          <div class="arch-box-icon">&#128203;</div>
+          <div class="arch-box-title">Certificate Holders</div>
+          <div class="arch-box-sub">Renewal reminders, CEU decisions, fee notices, activation emails</div>
+        </div>
+        <div class="arch-arrow">&#8594;</div>
+        <div class="arch-box">
+          <div class="arch-box-icon">&#128101;</div>
+          <div class="arch-box-title">References / Providers</div>
+          <div class="arch-box-sub">Form C requests, short course approval notices</div>
+        </div>
+      </div>
+      <p style="margin-top:20px; font-size:13px; color:#888; line-height:1.6;">Every trigger originates inside WordPress: a form submission, a reviewer decision, a timer reaching a date. WordPress fires a webhook to HighLevel. HighLevel runs the matching sequence and sends the email. Nothing is manual.</p>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <span class="legend-title">Trigger types</span>
+      <div class="legend-item"><div class="legend-bar" style="background:#21759b;"></div> WordPress action (form submit, button click, status change)</div>
+      <div class="legend-item"><div class="legend-bar" style="background:#2e7d32;"></div> Timer / date-based (X days before renewal, X days since last email)</div>
+      <div class="legend-item"><div class="legend-bar" style="background:#5c2d91;"></div> Admin action (batch send, manual trigger)</div>
+      <div class="legend-item"><div class="legend-bar" style="background:#b94a00;"></div> Reviewer decision in portal</div>
+      <span class="legend-title" style="margin-left:24px;">Sequence types</span>
+      <div class="legend-item"><div class="legend-dot" style="background:#e87c26;"></div> Standard sequence</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2e7d32;"></div> Has stop trigger (cancels if condition met)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#5c2d91;"></div> Multi-fire (fires once per event, not once per person)</div>
+    </div>
+
+    <!-- PRE-LAUNCH: DELIVERABILITY -->
+    <div class="section-label">Before Any Email Sends</div>
+    <p class="section-title">Pre-Launch: Email Deliverability Setup</p>
+
+    <div class="flow-group" style="border-left-color:#e65100;">
+      <h3>Domain Warming: Required Before Sequence 14</h3>
+      <div class="group-sub">A new sending domain has zero reputation with inbox providers. This work has to happen first or the activation emails land in spam on launch day, regardless of how engaged the list is.</div>
+
+      <div class="flow-row">
+        <div class="trigger-box" style="background:#e65100;">
+          <div class="t-label" style="color:#ffccbc;">One-time setup</div>
+          DNS records configured for sending subdomain
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card" style="border-left-color:#e65100;">
+          <div class="seq-num" style="background:#e65100;">&#9881;</div>
+          <div class="seq-body">
+            <h4>SPF, DKIM &amp; DMARC Configuration</h4>
+            <p>DNS records set up for SWSPCP's sending subdomain (e.g. <code style="background:#f0f0f0; padding:1px 5px; border-radius:3px;">mail.swspcp.org</code>) inside HL. Tells inbox providers that HL is authorized to send on SWSPCP's behalf. Without this, emails fail authentication and get flagged immediately.</p>
+            <span class="to-tag">One-time setup</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box timer" style="background:#b74000;">
+          <div class="t-label" style="color:#ffccbc;">2-3 week ramp</div>
+          Warming schedule: starts small, ramps up daily
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card" style="border-left-color:#e65100;">
+          <div class="seq-num" style="background:#e65100;">&#8679;</div>
+          <div class="seq-body">
+            <h4>Domain Warming Schedule</h4>
+            <p>Send volume starts low (50-100 emails/day) and ramps up gradually over 2-3 weeks. Inbox providers see consistent, low-complaint mail from the new domain and build a positive reputation for it. <strong style="color:#e65100;">This has to complete before Sequence 14 fires.</strong> Blasting 3,500 contacts from a cold domain skips the line and triggers spam filters.</p>
+            <span class="to-tag">Warm contacts used for ramp period</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box timer" style="background:#b74000;">
+          <div class="t-label" style="color:#ffccbc;">Ongoing during ramp</div>
+          Bounce rate + spam complaint monitoring
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card" style="border-left-color:#e65100;">
+          <div class="seq-num" style="background:#e65100;">&#128202;</div>
+          <div class="seq-body">
+            <h4>Deliverability Monitoring</h4>
+            <p>Bounce rates and spam complaint rates watched throughout the warming period. If either spikes, we slow the ramp and investigate before continuing. Domain reputation is easier to protect than it is to repair.</p>
+            <span class="to-tag">Monitoring (not a sequence)</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; background:#fff3e0; border-radius:8px; padding:14px 18px; font-size:13px; color:#555; line-height:1.6; border-left:3px solid #e65100;">
+        <strong style="color:#111;">Then Sequence 14 fires.</strong> Once the domain has reputation, the phased activation batch sends go out and land in inboxes. Not before.
+      </div>
+    </div>
+
+    <!-- GROUP 1: APPLICATION JOURNEY -->
+    <div class="section-label">Application Journey</div>
+    <p class="section-title">Sequences 1-3: From first visit through submission</p>
+
+    <div class="flow-group">
+      <h3>New Applicant</h3>
+      <div class="group-sub">These fire in order for every person who creates an account and applies.</div>
+
+      <div class="flow-row">
+        <div class="trigger-box wp">
+          <div class="t-label">WordPress trigger</div>
+          Account created + confirmed
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card">
+          <div class="seq-num">1</div>
+          <div class="seq-body">
+            <h4>Account Creation Confirmation</h4>
+            <p>Welcome + confirmation that the account is live. Sets up what happens next: start the application.</p>
+            <span class="to-tag">To: new registrant</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box wp">
+          <div class="t-label">WordPress trigger</div>
+          Application started but not submitted (24 hrs, 72 hrs, 7 days)
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card stop-logic">
+          <div class="seq-num">2</div>
+          <div class="seq-body">
+            <h4>Abandoned Application Reminder Series</h4>
+            <p>3-touch reminder sequence over 7 days. <strong style="color:#2e7d32;">Stop trigger: fires automatically when application is submitted.</strong> The moment they submit, all pending reminders cancel.</p>
+            <span class="to-tag">To: applicant</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box wp">
+          <div class="t-label">WordPress trigger</div>
+          Application submitted + payment processed
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card">
+          <div class="seq-num">3</div>
+          <div class="seq-body">
+            <h4>Application Submitted Confirmation</h4>
+            <p>Confirms receipt of application and payment. Sets timeline expectation: initial decision within 24-48 hours.</p>
+            <span class="to-tag">To: applicant</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP 2: REVIEW + REFERENCES -->
+    <div class="section-label">Review &amp; References</div>
+    <p class="section-title">Sequences 4-9: Reviewer decisions and the reference workflow</p>
+
+    <div class="flow-group" style="border-left-color:#b94a00;">
+      <h3>After the Reviewer Acts</h3>
+      <div class="group-sub">Reviewers log into their portal and mark an application approved, declined, or incomplete. Each decision fires a different sequence.</div>
+
+      <div class="flow-row">
+        <div class="trigger-box reviewer">
+          <div class="t-label">Reviewer decision</div>
+          Approved: WPIT path (references required)
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card multi-fire">
+          <div class="seq-num">4</div>
+          <div class="seq-body">
+            <h4>Reference Request (Form C), x3</h4>
+            <p>Sends the Form C link to each of the 3 required references individually. <strong style="color:#5c2d91;">Multi-fire: one email per reference, tracked separately.</strong> At least one must be a PWS.</p>
+            <span class="to-tag">To: each reference</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box wp">
+          <div class="t-label">WordPress trigger</div>
+          Each individual Form C submitted
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card multi-fire">
+          <div class="seq-num">5</div>
+          <div class="seq-body">
+            <h4>Reference Received Notification</h4>
+            <p>Notifies the applicant each time one reference submits. <strong style="color:#5c2d91;">Fires once per reference, not once per applicant.</strong> So if 2 of 3 are in, the applicant knows exactly where they stand.</p>
+            <span class="to-tag">To: applicant</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box wp">
+          <div class="t-label">WordPress trigger</div>
+          Third (final) Form C submitted
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card">
+          <div class="seq-num">6</div>
+          <div class="seq-body">
+            <h4>All References Complete Notification</h4>
+            <p>All 3 in. Tells the applicant the final review window (24-72 hours) so they stop watching their inbox every hour and stop emailing staff.</p>
+            <span class="to-tag">To: applicant</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box reviewer">
+          <div class="t-label">Reviewer decision</div>
+          Final approval (all paths)
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card">
+          <div class="seq-num">7</div>
+          <div class="seq-body">
+            <h4>Application Approved</h4>
+            <p>Congratulations email with direct instructions for accessing the certificate holder portal and downloading the certificate. Applies to PWS, WPIT, Wetland Professional, and all upgrade paths.</p>
+            <span class="to-tag">To: applicant</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box reviewer">
+          <div class="t-label">Reviewer decision</div>
+          Declined: reviewer enters reason
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card">
+          <div class="seq-num">8</div>
+          <div class="seq-body">
+            <h4>Application Declined</h4>
+            <p>Decline notice with the reviewer's reason pulled in dynamically from the portal. Includes next steps for reapplication. No reason entered = email does not send until it is.</p>
+            <span class="to-tag">To: applicant</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box reviewer">
+          <div class="t-label">Reviewer decision</div>
+          Marked incomplete: reviewer notes what is missing
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card">
+          <div class="seq-num">9</div>
+          <div class="seq-body">
+            <h4>Incomplete Kickback with Reviewer Notes</h4>
+            <p>Tells the applicant exactly what is missing (pulled from the reviewer's notes field), prompts them to correct and resubmit. No vague "your application needs attention" emails.</p>
+            <span class="to-tag">To: applicant</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP 3: CERTIFICATE HOLDER LIFECYCLE -->
+    <div class="section-label">Certificate Holder Lifecycle</div>
+    <p class="section-title">Sequences 10-12: Ongoing communications after certification</p>
+
+    <div class="flow-group green">
+      <h3>Active Certificate Holders</h3>
+      <div class="group-sub">These run on timers keyed to each certificate holder's renewal date and fee due date, not broadcast emails.</div>
+
+      <div class="flow-row">
+        <div class="trigger-box timer">
+          <div class="t-label">Timer trigger</div>
+          90 days before renewal date, then 60, then 30
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card stop-logic">
+          <div class="seq-num">10</div>
+          <div class="seq-body">
+            <h4>Renewal Reminder Series (90 / 60 / 30 Days)</h4>
+            <p>Three touchpoints before the renewal deadline. <strong style="color:#2e7d32;">Stop trigger: the moment a renewal application is submitted, all pending reminders in the series cancel immediately.</strong> People who already renewed never get nagged.</p>
+            <span class="to-tag">To: certificate holder</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box wp">
+          <div class="t-label">WordPress trigger</div>
+          Outside credit (CEU) submission reviewed and decided
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card">
+          <div class="seq-num">11</div>
+          <div class="seq-body">
+            <h4>Outside Credit (CEU) Decision Notice</h4>
+            <p>Approved or declined notice with the decision detail. Certificate holders submit CEUs through the portal; this closes the loop so they know if it counted.</p>
+            <span class="to-tag">To: certificate holder</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box timer">
+          <div class="t-label">Timer trigger</div>
+          Annual maintenance fee due date approaching
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card">
+          <div class="seq-num">12</div>
+          <div class="seq-body">
+            <h4>Annual Maintenance Fee Reminder</h4>
+            <p>Reminder that the annual fee is due, with a direct link to the payment screen in the portal. Keeps people current without requiring staff to chase them down.</p>
+            <span class="to-tag">To: certificate holder</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP 4: SPECIAL CASES -->
+    <div class="section-label">Special Flows</div>
+    <p class="section-title">Sequences 13-14: Short course providers and account activation</p>
+
+    <div class="flow-group" style="border-left-color:#5c2d91;">
+      <h3>Short Course Providers + Account Activation</h3>
+      <div class="group-sub">These two sequences operate differently from the applicant flows above.</div>
+
+      <div class="flow-row">
+        <div class="trigger-box wp">
+          <div class="t-label">WordPress trigger</div>
+          Provider submits short course for pre-approval, then committee reviews
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card">
+          <div class="seq-num">13</div>
+          <div class="seq-body">
+            <h4>Short Course Provider Submission + Approval Notice</h4>
+            <p>Submission confirmation when a third-party provider applies for course credit pre-approval. Separate approval or decline notice fires when the committee acts. Same review-and-decide logic as the application flow, different audience.</p>
+            <span class="to-tag">To: course provider</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px;"></div>
+
+      <div class="flow-row">
+        <div class="trigger-box admin">
+          <div class="t-label">Admin-triggered</div>
+          Batch send to ~3,500 existing certificate holders at launch
+        </div>
+        <div class="flow-arrow-col">&#8594;</div>
+        <div class="email-card multi-fire">
+          <div class="seq-num">14</div>
+          <div class="seq-body">
+            <h4>Phased Account Activation Rollout</h4>
+            <p>The ~3,500 existing certificate holders need to set up their accounts on the new platform. <strong style="color:#5c2d91;">These go out in batches, not all at once,</strong> to protect deliverability and give staff time to handle support questions in waves rather than all on day one.</p>
+            <span class="to-tag">To: existing certificate holders (batched)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARY STATS -->
+    <div class="section-label">By the Numbers</div>
+    <p class="section-title" style="margin-bottom:20px;">What's inside this build</p>
+
+    <div class="summary-grid">
+      <div class="summary-stat">
+        <div class="num">14</div>
+        <div class="lbl">Automation Sequences</div>
+      </div>
+      <div class="summary-stat">
+        <div class="num">2</div>
+        <div class="lbl">Stop Triggers (auto-cancel)</div>
+      </div>
+      <div class="summary-stat">
+        <div class="num">3,500</div>
+        <div class="lbl">Contacts Imported + Segmented</div>
+      </div>
+      <div class="summary-stat">
+        <div class="num">2-3 wk</div>
+        <div class="lbl">Domain Warming Before Launch</div>
+      </div>
+    </div>
+
+    <!-- BACK LINK -->
+    <div style="text-align:center; padding-top:16px;">
+      <a href="index.html" style="display:inline-block; background:#111; color:#fff; font-size:14px; font-weight:700; padding:14px 32px; border-radius:6px; text-decoration:none;">
+        &larr; Back to Proposal
+      </a>
+    </div>
+
+  </div>
+
+</body>
+</html>

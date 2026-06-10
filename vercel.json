@@ -4,6 +4,7 @@
     { "source": "/certa-pro", "destination": "/certa-pro/", "permanent": false },
     { "source": "/service-1st", "destination": "/service-1st/", "permanent": false },
     { "source": "/spartan-foreign-accents", "destination": "/spartan-foreign-accents/", "permanent": false },
+    { "source": "/spartan-swspcp-highlevel", "destination": "/spartan-swspcp-highlevel/", "permanent": false },
     { "source": "/dni", "destination": "/dni/", "permanent": false }
   ]
 }
