@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outbound Client Acquisition Build Proposal - Spartan Marketing</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      line-height: 1.6;
+    }
+
+    .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .site-header {
+      background: #111;
+      padding: 24px 0;
+    }
+    .site-header .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-header .brand {
+      font-size: 20px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .site-header .brand span { color: #e87c26; }
+    .site-header .sub {
+      font-size: 12px;
+      color: #888;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      background: #111;
+      padding: 52px 0 60px;
+      border-bottom: 4px solid #e87c26;
+    }
+    .hero .label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 38px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      max-width: 720px;
+      margin-bottom: 18px;
+    }
+    .hero h1 span { color: #e87c26; }
+    .hero p {
+      font-size: 17px;
+      color: #aaa;
+      max-width: 620px;
+      line-height: 1.75;
+    }
+
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 52px 40px 80px;
+    }
+
+    .section-label {
+      display: inline-block;
+      background: #e87c26;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      border-left: 5px solid #e87c26;
+    }
+    .card.dark-border { border-left-color: #111; }
+    .card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #111;
+    }
+    .card p {
+      font-size: 16px;
+      color: #444;
+      max-width: 800px;
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+    .card p:last-child { margin-bottom: 0; }
+
+    .problem-list {
+      list-style: none;
+      margin-top: 16px;
+    }
+    .problem-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-top: 1px solid #f0f0f0;
+      font-size: 15px;
+      color: #333;
+      line-height: 1.6;
+    }
+    .problem-list li:first-child { border-top: none; padding-top: 0; }
+    .problem-list .dot {
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      background: #e87c26;
+      border-radius: 50%;
+      margin-top: 8px;
+    }
+
+    .stack-diagram {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 0;
+      margin: 24px 0 8px;
+      align-items: center;
+    }
+    .stack-tool {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 20px 24px;
+      text-align: center;
+      border-top: 3px solid #e87c26;
+    }
+    .stack-tool .tool-name {
+      font-size: 16px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .stack-tool .tool-role {
+      font-size: 12px;
+      color: #888;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .stack-arrow {
+      text-align: center;
+      font-size: 24px;
+      color: #e87c26;
+      font-weight: 900;
+      padding: 0 12px;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 8px;
+    }
+    .step {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 22px 24px;
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #111;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
+    .step h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .step p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .deliverables-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 16px;
+    }
+    .deliverable-item {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 22px 24px;
+      border-top: 3px solid #e87c26;
+    }
+    .deliverable-item h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .deliverable-item p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .roi-block {
+      background: #fff8f3;
+      border: 2px solid #e87c26;
+      border-radius: 10px;
+      padding: 32px 40px;
+      margin-bottom: 28px;
+    }
+    .roi-block h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 16px;
+    }
+    .roi-numbers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+    .roi-stat {
+      text-align: center;
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px 16px;
+      border-top: 3px solid #111;
+    }
+    .roi-stat .number {
+      font-size: 32px;
+      font-weight: 900;
+      color: #e87c26;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .roi-stat .label {
+      font-size: 12px;
+      color: #666;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .roi-block p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .investment-section {
+      margin-bottom: 28px;
+    }
+    .investment-row {
+      background: #fff;
+      border-radius: 10px;
+      padding: 32px 40px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 40px;
+      align-items: center;
+      border-left: 5px solid #111;
+    }
+    .investment-row.orange-border { border-left-color: #e87c26; }
+    .investment-row h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .investment-row p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    .investment-number {
+      text-align: center;
+      background: #f8f8f8;
+      border-radius: 10px;
+      padding: 24px 20px;
+    }
+    .investment-number .amount {
+      font-size: 42px;
+      font-weight: 900;
+      color: #111;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .investment-number .amount.orange { color: #e87c26; }
+    .investment-number .ilabel {
+      font-size: 12px;
+      color: #888;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .investment-number .sublabel {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 6px;
+    }
+
+    .includes-list {
+      list-style: none;
+      margin-top: 14px;
+    }
+    .includes-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: #444;
+      padding: 7px 0;
+      border-top: 1px solid #f0f0f0;
+      line-height: 1.5;
+    }
+    .includes-list li:first-child { border-top: none; padding-top: 0; }
+    .includes-list .check {
+      flex-shrink: 0;
+      color: #e87c26;
+      font-weight: 800;
+      font-size: 14px;
+      margin-top: 1px;
+    }
+
+    .caveat-block {
+      background: #fffbf0;
+      border: 2px solid #f0c040;
+      border-radius: 10px;
+      padding: 24px 32px;
+      margin-bottom: 28px;
+    }
+    .caveat-block h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .caveat-block p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .timeline-step {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 20px 20px;
+    }
+    .timeline-step .week {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #e87c26;
+      margin-bottom: 6px;
+    }
+    .timeline-step h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 6px;
+    }
+    .timeline-step p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .bottom-note {
+      background: #111;
+      color: #fff;
+      border-radius: 10px;
+      padding: 40px 40px;
+      margin-top: 8px;
+      margin-bottom: 28px;
+    }
+    .bottom-note h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+    .bottom-note p {
+      font-size: 15px;
+      color: #aaa;
+      max-width: 700px;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .bottom-note p:last-child { margin-bottom: 0; }
+    .bottom-note strong { color: #e87c26; }
+    .bottom-note a:not(.cta-button) { color: #e87c26; }
+
+    .signature-section { margin-top: 28px; }
+    .signature-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 40px 40px;
+      border: 2px solid #111;
+    }
+    .signature-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .signature-card > p {
+      font-size: 15px;
+      color: #555;
+      max-width: 720px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .agreement-summary {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.9;
+      border-left: 4px solid #e87c26;
+    }
+    .agreement-summary strong { color: #111; }
+    .sig-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr 200px;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .sig-field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 6px;
+    }
+    .sig-field input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid #ddd;
+      padding: 8px 0;
+      font-size: 16px;
+      color: #111;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .sig-field input:focus { border-bottom-color: #e87c26; }
+    .sig-field input[readonly] { color: #888; cursor: default; }
+    .sig-field input#sig-name { font-style: italic; font-size: 18px; }
+    .agree-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 28px;
+      margin-top: 8px;
+    }
+    .agree-row input[type="checkbox"] {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: #e87c26;
+      cursor: pointer;
+    }
+    .agree-row label {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+    .sig-submit {
+      display: inline-block;
+      background: #111;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .sig-submit:hover { background: #333; }
+    .sig-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .sig-questions {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+    .sig-questions a { color: #e87c26; }
+    .sig-success {
+      display: none;
+      background: #f0faf0;
+      border: 2px solid #4caf50;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 20px;
+      font-size: 15px;
+      color: #2e7d32;
+      font-weight: 600;
+    }
+    .sig-error {
+      display: none;
+      color: #c62828;
+      font-size: 13px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 800px) {
+      .inner { padding-left: 20px; padding-right: 20px; }
+      .main { padding-left: 20px; padding-right: 20px; }
+      .stack-diagram { grid-template-columns: 1fr; }
+      .stack-arrow { display: none; }
+      .process-steps { grid-template-columns: 1fr; }
+      .deliverables-grid { grid-template-columns: 1fr; }
+      .roi-numbers { grid-template-columns: 1fr; }
+      .investment-row { grid-template-columns: 1fr; }
+      .timeline-steps { grid-template-columns: 1fr 1fr; }
+      .card { padding: 24px 20px; }
+      .bottom-note { padding: 28px 20px; }
+      .sig-fields { grid-template-columns: 1fr; }
+      .site-header .sub { display: none; }
+    }
+  
+    .stack-diagram.five { grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr; }
+    .stack-diagram.five .stack-tool { padding: 18px 12px; height: 100%; }
+    @media (max-width: 800px) { .stack-diagram.five { grid-template-columns: 1fr; gap: 10px; } }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">Applied AI <span>Works</span></div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div style="font-size:12px; color:#555; font-weight:500; letter-spacing:1px; text-transform:uppercase;">In partnership with</div>
+        <img src="guide-mktg-logo-white.png" alt="Guide MKTG" style="height:60px; display:block;">
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="inner">
+      <div class="label">Proposal</div>
+      <h1>Spartan Marketing<br><span>Outbound Client Acquisition Build</span></h1>
+      <p>Phase one of the outbound program: what we're building, how it works, what it costs, and when it goes live.</p>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="section-label">What We Heard</div>
+    <div class="card">
+      <h2>A small, finite market, and a plan to reach every company in it.</h2>
+      <p>The client is a managed IT services provider operating in three North Carolina metros. They only sell to companies of 15 to 125 employees that run fully on Microsoft 365 and are willing to hand their whole technology function to one provider. That works out to roughly 2,500 to 4,000 companies. The goal is to find all of them, confirm they fit before anyone makes contact, and reach each one before their current IT arrangement comes up for review.</p>
+      <ul class="problem-list">
+        <li><div class="dot"></div><span>Fit has to be verified before contact. A company on Google Workspace can't become a client, so no sales time should go to it.</span></li>
+        <li><div class="dot"></div><span>Every first email needs something true and specific to lead with, or it gets deleted like the rest. The plan is a real finding about each company's own email security, with a one-page report they can check themselves.</span></li>
+        <li><div class="dot"></div><span>Almost no MSP tracks when each prospect's contract can be exited. The program is built around capturing that renewal date on every account, so month thirteen produces more than month one.</span></li>
+        <li><div class="dot"></div><span>Some events reliably send a company shopping: their IT provider gets acquired, their IT person quits, a new CFO or COO starts, they move offices, or they grow past 15 people. Those accounts need to jump the queue.</span></li>
+        <li><div class="dot"></div><span>Outreach can't put the client's day-to-day email at risk, so sending has to happen from separate, warmed-up domains.</span></li>
+        <li><div class="dot"></div><span>The client provides a dedicated caller and Spartan handles the messaging. What's missing is the engine underneath: the list, the verification, the infrastructure, and the tracking.</span></li>
+      </ul>
+    </div>
+
+    <div class="section-label">Why Build This</div>
+    <div class="roi-block">
+      <h2>What the engine makes possible.</h2>
+      <div class="roi-numbers">
+        <div class="roi-stat">
+          <div class="number">4,000-6,000</div>
+          <div class="label">Companies named, checked, and mapped</div>
+        </div>
+        <div class="roi-stat">
+          <div class="number">275</div>
+          <div class="label">Accounts worked per month, each with its own report</div>
+        </div>
+        <div class="roi-stat">
+          <div class="number">7-10</div>
+          <div class="label">New clients projected in months 4 to 12</div>
+        </div>
+      </div>
+      <p>Those volumes come straight from the program model in Spartan's scope of work: 275 accounts a month, about 33 replies, 6 meetings, 3 proposals, and 7 to 10 new clients across the nine steady-state months. Every one of those numbers depends on the same foundation being in place first.</p>
+      <p style="margin-top:12px;">Here is what the build replaces. Checking 4,000 to 6,000 companies by hand for Microsoft 365, then again for email security, then writing a custom report for each, is months of work for a person, and it would never get redone as companies change. Built as a system, it runs in the background, and each finding costs almost nothing to produce. The client also gets a renewal calendar that keeps growing. It is the one asset in the program that a competitor can't copy by hiring a bigger sales team.</p>
+      <p style="margin-top:12px;">One new managed IT client is a multi-year relationship. The build is a one-time cost against a program designed to produce seven to ten of them.</p>
+    </div>
+
+    <div class="section-label">How We're Building It</div>
+    <div class="card dark-border">
+      <h2>Five stages, one engine. Every company gets checked before anyone calls.</h2>
+      <p>Each stage feeds the next. Companies that don't fit drop out early, so the client's caller only ever talks to accounts that already qualify.</p>
+      <div class="stack-diagram five">
+        <div class="stack-tool"><div class="tool-name">Find</div><div class="tool-role">Every company in 3 metros</div></div>
+        <div class="stack-arrow">&#8594;</div>
+        <div class="stack-tool"><div class="tool-name">Verify</div><div class="tool-role">Microsoft 365 or out</div></div>
+        <div class="stack-arrow">&#8594;</div>
+        <div class="stack-tool"><div class="tool-name">Report</div><div class="tool-role">Email security finding</div></div>
+        <div class="stack-arrow">&#8594;</div>
+        <div class="stack-tool"><div class="tool-name">Reach</div><div class="tool-role">Right people, warmed inboxes</div></div>
+        <div class="stack-arrow">&#8594;</div>
+        <div class="stack-tool"><div class="tool-name">Track</div><div class="tool-role">Renewal dates + triggers</div></div>
+      </div>
+      <div class="process-steps" style="margin-top:24px;">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Build the account list</h3>
+          <p>Every company with 15 to 125 employees across the three metros, somewhere between 4,000 and 6,000 businesses, named and mapped by territory.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Check Microsoft 365</h3>
+          <p>A company's email settings are public. We read them for every company on the list. Google companies come off, so no sales time goes to them.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Find the security problem</h3>
+          <p>The same lookup shows whether a company has protected its domain against forged email. We record exactly what's wrong and generate a one-page branded report for each company.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Find the decision-makers</h3>
+          <p>Two to three contacts per company across owner, finance, and operations. Companies this size don't have a CIO, so the IT vendor call usually sits with the CFO, controller, or operations lead.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">5</div>
+          <h3>Set up safe sending</h3>
+          <p>Twelve inboxes on lookalike domains, authenticated and warmed for four weeks. Outreach never touches the client's own site or email.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">6</div>
+          <h3>Track renewals and triggers</h3>
+          <p>Renewal date becomes a required field on every account. A weekly alert flags companies that just became worth calling, and a dashboard shows sends, replies, dates captured, and meetings set.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">What You Walk Away With</div>
+    <div class="card">
+      <h2>A working engine, the data behind it, and a tracking system that gets better every month.</h2>
+      <div class="deliverables-grid">
+        <div class="deliverable-item">
+          <h3>Account List</h3>
+          <p>Every company in the three metros with 15 to 125 employees, named and mapped by territory. The cost of the lists and data is covered by the client.</p>
+        </div>
+        <div class="deliverable-item">
+          <h3>Microsoft 365 Verification</h3>
+          <p>Every company checked, Google Workspace companies removed, so the list only holds companies that can become clients.</p>
+        </div>
+        <div class="deliverable-item">
+          <h3>Email Security Check + Branded Reports</h3>
+          <p>A recorded finding for every company that stays, plus a plain-language one-page report on its own domain, branded to the client. This is what the first email offers.</p>
+        </div>
+        <div class="deliverable-item">
+          <h3>Decision-Maker Contacts</h3>
+          <p>Two to three verified contacts per company across owner, finance, and operations.</p>
+        </div>
+        <div class="deliverable-item">
+          <h3>Sending Infrastructure</h3>
+          <p>Twelve inboxes on lookalike domains, authenticated and warmed over four weeks before the first message goes out.</p>
+        </div>
+        <div class="deliverable-item">
+          <h3>CRM Renewal Tracking</h3>
+          <p>Renewal date set up as a required field on every account in the client's CRM, with the workflow that pulls accounts back into outreach ahead of their deadline.</p>
+        </div>
+        <div class="deliverable-item">
+          <h3>Weekly Trigger Alerts</h3>
+          <p>A weekly watch for MSP acquisitions, IT staff leaving or IT roles posted, new CFOs and COOs, office moves, and companies growing past 15 employees.</p>
+        </div>
+        <div class="deliverable-item">
+          <h3>Reporting Dashboard</h3>
+          <p>What went out, who replied, how many renewal dates were captured, and how many meetings were set.</p>
+        </div>
+      </div>
+      <p style="margin-top:20px;">Campaign messaging and the call guides stay with Spartan. We load them into the sending software and CRM once approved.</p>
+    </div>
+
+    <div class="section-label">Investment</div>
+    <div class="investment-section">
+
+      <div class="investment-row orange-border">
+        <div>
+          <h3>Core Outbound Build <span style="font-size:13px; font-weight:600; color:#888;">Invoiced by Applied AI Works</span></h3>
+          <p>Everything required to run outbound, from the first list to the tracking system. Fixed scope, built over eight weeks.</p>
+          <ul class="includes-list">
+            <li><div class="check">&#10003;</div> Account list: 4,000 to 6,000 companies across 3 metros, mapped by territory (list and data costs are paid by the client)</li>
+            <li><div class="check">&#10003;</div> Microsoft 365 verification on every company</li>
+            <li><div class="check">&#10003;</div> Email security check on every company that stays</li>
+            <li><div class="check">&#10003;</div> One-page branded security report generator</li>
+            <li><div class="check">&#10003;</div> 2 to 3 decision-maker contacts per company</li>
+            <li><div class="check">&#10003;</div> 12 inboxes on lookalike domains, authenticated and warmed for 4 weeks</li>
+            <li><div class="check">&#10003;</div> CRM setup with required renewal-date field and workflow</li>
+            <li><div class="check">&#10003;</div> Weekly trigger alerts</li>
+            <li><div class="check">&#10003;</div> Reporting dashboard</li>
+          </ul>
+        </div>
+        <div class="investment-number">
+          <div class="amount orange">$34,600</div>
+          <div class="ilabel">One-Time Fee</div>
+          <div class="sublabel">$17,300 at kickoff / $17,300 at go-live</div>
+        </div>
+      </div>
+
+      <div class="investment-row">
+        <div>
+          <h3>Switching MSPs Toolkit <span style="font-size:13px; font-weight:600; color:#888;">Optional add-on, invoiced by Applied AI Works</span></h3>
+          <p>A tool on the client's website that walks a company through leaving its current IT provider. It works as the giveaway inside the campaigns, gives referral partners something useful to hand over, and lets the client's team walk a prospect through it live on a call. The thing that stops most buyers from switching is fear of the transition, and this takes that fear away.</p>
+          <ul class="includes-list">
+            <li><div class="check">&#10003;</div> Contract Exit Audit: the last day they can give notice before the contract renews</li>
+            <li><div class="check">&#10003;</div> Ownership Matrix: what they own versus what their provider owns and takes back</li>
+            <li><div class="check">&#10003;</div> Transition Timeline: a 90-day plan built backward from their notice deadline</li>
+            <li><div class="check">&#10003;</div> Bidder Question Set and Red Flag Checklist</li>
+            <li><div class="check">&#10003;</div> Proposal Comparison Worksheet</li>
+            <li><div class="check">&#10003;</div> Landing page, supporting search content, PDF download, and the form that captures who used it</li>
+            <li><div class="check">&#10003;</div> Five follow-up emails timed to each prospect's own deadline</li>
+          </ul>
+        </div>
+        <div class="investment-number">
+          <div class="amount orange" style="font-size:36px;">$14,000</div>
+          <div class="ilabel">One-Time Fee</div>
+          <div class="sublabel">$7,000 at kickoff / $7,000 at go-live</div>
+        </div>
+      </div>
+
+      <div class="investment-row" style="border-left-color: #ddd;">
+        <div>
+          <h3>Platform and Data Costs <span style="font-size:13px; font-weight:600; color:#888;">Paid directly by the client</span></h3>
+          <p>As stated in the scope of work, these are paid by the client and are not part of this fee. We recommend and set up each one.</p>
+          <ul class="includes-list">
+            <li><div class="check">&#10003;</div> Company lists and data enrichment for company and contact records</li>
+            <li><div class="check">&#10003;</div> LinkedIn Sales Navigator</li>
+            <li><div class="check">&#10003;</div> Sequencing software</li>
+            <li><div class="check">&#10003;</div> Sending domains and inboxes</li>
+            <li><div class="check">&#10003;</div> CRM seats</li>
+          </ul>
+        </div>
+        <div class="investment-number">
+          <div class="amount" style="font-size:26px;">Client-paid</div>
+          <div class="ilabel">No markup</div>
+          <div class="sublabel">Billed by each platform</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="caveat-block">
+      <h3>What this quote assumes</h3>
+      <p>The scope of work says the client provides access to its CRM and existing prospect records, a do-not-contact list, and approval on messaging within five business days of submission. This quote depends on those, plus Spartan supplying the campaign messaging, call guides, and the copy for the Toolkit's page and emails. It also depends on the enrichment and monitoring platforms returning the data fields we need, and on the client's CRM allowing a required renewal-date field. If anything turns out different once we're inside the accounts, we'll review scope and price together before any related work begins. No surprises.</p>
+    </div>
+
+    <div class="section-label">Timeline</div>
+    <div class="card dark-border">
+      <h2>Live at low volume in 8 weeks, full volume by month 4.</h2>
+      <div class="timeline-steps">
+        <div class="timeline-step">
+          <div class="week">Weeks 1-2</div>
+          <h3>Foundation</h3>
+          <p>Fit criteria agreed, company list built, sending domains purchased, and warmup started.</p>
+        </div>
+        <div class="timeline-step">
+          <div class="week">Weeks 3-4</div>
+          <h3>Verify + Find</h3>
+          <p>Every company checked for Microsoft 365 and email security problems, then contacts found at the ones that qualify.</p>
+        </div>
+        <div class="timeline-step">
+          <div class="week">Weeks 5-6</div>
+          <h3>Systems</h3>
+          <p>CRM and sending software set up, trigger alerts and dashboard built, Spartan's messaging and call guides loaded.</p>
+        </div>
+        <div class="timeline-step">
+          <div class="week">Weeks 7-8</div>
+          <h3>Approve + Launch</h3>
+          <p>Messaging approved, warmup finishes, first campaigns go live at low volume.</p>
+        </div>
+      </div>
+      <p style="margin-top:16px; font-size:14px; color:#555;">If the Switching MSPs Toolkit is included, it gets built alongside the core work during weeks 4 to 10.</p>
+    </div>
+
+    <div class="bottom-note">
+      <h3>Ready to move forward?</h3>
+      <p>Sign below and I'll reach out within one business day to confirm receipt and get the project started. The first things we'll need from you are the fit criteria for the three metros and access to the client's CRM.</p>
+      <p>Questions before signing? I'm easy to reach at <a href="mailto:josh@guidemktg.com">josh@guidemktg.com</a>.</p>
+    </div>
+
+    <div class="signature-section">
+      <div class="section-label">Sign to Get Started</div>
+      <div class="signature-card">
+        <h3>Agreement &amp; Authorization</h3>
+        <p>By signing below, you authorize Applied AI Works to begin the outbound build described in this proposal. An invoice for half of the selected fee will be issued upon signing and is due at project kickoff. The remaining half is due at go-live.</p>
+
+        <div class="agreement-summary">
+          <strong>Scope:</strong> Outbound Client Acquisition Build, Phase 1 (managed IT services provider, North Carolina)<br>
+          <strong>Deliverables:</strong> Account list, Microsoft 365 verification, email security checks and branded reports, contacts, sending infrastructure, CRM renewal tracking, trigger alerts, reporting dashboard<br>
+          <strong>Core Build Fee:</strong> $34,600 total ($17,300 at kickoff, $17,300 at go-live), invoiced by Applied AI Works / Guide MKTG, LLC<br>
+          <strong>Switching MSPs Toolkit (optional):</strong> $14,000 total ($7,000 at kickoff, $7,000 at go-live), included only if selected below<br>
+          <strong>Platform and data costs:</strong> paid directly by the client to each platform<br>
+          <strong>Payment:</strong> Check or ACH Transfer to Guide MKTG, LLC / 1800 92nd Ave, Zeeland, MI 49464
+        </div>
+
+        <div class="agree-row" style="margin-top:0;">
+          <input type="checkbox" id="sig-toolkit">
+          <label for="sig-toolkit"><strong>Include the Switching MSPs Toolkit (+$14,000).</strong> Leave unchecked to sign for the Core Build only.</label>
+        </div>
+
+        <div class="sig-fields">
+          <div class="sig-field">
+            <label>Full Name</label>
+            <input type="text" id="sig-name" placeholder="Sign your name" autocomplete="name">
+          </div>
+          <div class="sig-field">
+            <label>Title / Company</label>
+            <input type="text" id="sig-title" placeholder="e.g. Director, Spartan Marketing" autocomplete="organization-title">
+          </div>
+          <div class="sig-field">
+            <label>Date</label>
+            <input type="text" id="sig-date" readonly>
+          </div>
+        </div>
+
+        <div class="agree-row">
+          <input type="checkbox" id="sig-agree">
+          <label for="sig-agree">I have read and agree to the scope, deliverables, and payment terms outlined above. I understand that work begins after payment is received. This constitutes a binding agreement between myself and Applied AI Works / Guide MKTG, LLC.</label>
+        </div>
+
+        <button class="sig-submit" id="sig-button" onclick="sendSignature()">Sign &amp; Send Agreement</button>
+        <div class="sig-error" id="sig-error"></div>
+        <div class="sig-success" id="sig-success">Your agreement has been received. Josh will be in touch within one business day to confirm and get the project started. Thank you!</div>
+
+        <p class="sig-questions">Questions before signing? Email <a href="mailto:josh@guidemktg.com">josh@guidemktg.com</a></p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.getElementById('sig-date').value = new Date().toLocaleDateString('en-US', {
+      month: 'long', day: 'numeric', year: 'numeric'
+    });
+
+    async function sendSignature() {
+      const name   = document.getElementById('sig-name').value.trim();
+      const title  = document.getElementById('sig-title').value.trim();
+      const date   = document.getElementById('sig-date').value;
+      const agreed = document.getElementById('sig-agree').checked;
+      const toolkit = document.getElementById('sig-toolkit').checked;
+      const errEl  = document.getElementById('sig-error');
+      const sucEl  = document.getElementById('sig-success');
+      const btn    = document.getElementById('sig-button');
+
+      errEl.style.display = 'none';
+      errEl.textContent = '';
+
+      if (!name)   { errEl.textContent = 'Please enter your full name.'; errEl.style.display = 'block'; return; }
+      if (!agreed) { errEl.textContent = 'Please check the agreement box to proceed.'; errEl.style.display = 'block'; return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const res = await fetch('/api/sign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            title: title || 'Spartan Marketing',
+            date,
+            proposalTitle: 'Spartan Marketing: Outbound Client Acquisition Build (Phase 1)',
+            clientCompany: 'Spartan Marketing',
+            investment: toolkit ? '$34,600 core build + $14,000 Switching MSPs Toolkit = $48,600' : '$34,600 core build (Toolkit not included)'
+          })
+        });
+
+        if (!res.ok) throw new Error('Server error');
+
+        sucEl.style.display = 'block';
+        sucEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (e) {
+        btn.disabled = false;
+        btn.textContent = 'Sign & Send Agreement';
+        errEl.textContent = 'Something went wrong. Please email josh@guidemktg.com directly.';
+        errEl.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>

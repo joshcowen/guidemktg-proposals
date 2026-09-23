@@ -5,6 +5,7 @@
     { "source": "/service-1st", "destination": "/service-1st/", "permanent": false },
     { "source": "/spartan-foreign-accents", "destination": "/spartan-foreign-accents/", "permanent": false },
     { "source": "/spartan-swspcp-highlevel", "destination": "/spartan-swspcp-highlevel/", "permanent": false },
+    { "source": "/spartan-outbound-build", "destination": "/spartan-outbound-build/", "permanent": false },
     { "source": "/dni", "destination": "/dni/", "permanent": false }
   ]
 }
